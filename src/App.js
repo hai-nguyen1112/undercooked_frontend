@@ -7,12 +7,14 @@ import {isEmpty} from 'lodash'
 import Rules from './components/Rules'
 import Leaderboard from './containers/Leaderboard'
 import Levels from './containers/Levels'
+import Game1 from './containers/Game1'
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      user: {}
+      user: {},
+      level: {}
     }
   }
 
@@ -35,6 +37,10 @@ class App extends Component {
     }
   }
 
+  handleUpdateLevelState = level => {
+    this.setState({level: level})
+  }
+
   render() {
     return (
       <div className="App">
@@ -53,7 +59,12 @@ class App extends Component {
               return isEmpty(this.state.user) ? <Redirect to="/login"/> : <Leaderboard user={this.state.user} handleUpdateUserState={this.handleUpdateUserState}/>
             }}/>
           <Route exact path="/levels" render={() => {
-              return isEmpty(this.state.user) ? <Redirect to="/login"/> : <Levels user={this.state.user} handleUpdateUserState={this.handleUpdateUserState}/>
+              return isEmpty(this.state.user) ? <Redirect to="/login"/> : <Levels user={this.state.user} handleUpdateUserState={this.handleUpdateUserState} handleUpdateLevelState={this.handleUpdateLevelState}/>
+            }}/>
+          <Route exact path="/game/:leveId" render={() => {
+              if (this.state.level.id === 1) {
+                return isEmpty(this.state.user) ? <Redirect to="/login"/> : <Game1 user={this.state.user} level={this.state.level}/>
+              }
             }}/>
         </Switch>
       </div>

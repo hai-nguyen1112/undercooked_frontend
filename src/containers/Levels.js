@@ -19,7 +19,7 @@ class Levels extends Component {
     })
   }
   render() {
-    let recipePopupCards = this.state.levels.map(level => <RecipePopup key={level.id} level={level}/>)
+    let recipePopupCards = this.state.levels.map(level => <RecipePopup key={level.id} user={this.props.user} level={level} handleUpdateLevelState={this.props.handleUpdateLevelState}/>)
     return (
       <div className="levels">
         <Nav user={this.props.user} handleUpdateUserState={this.props.handleUpdateUserState}/>
