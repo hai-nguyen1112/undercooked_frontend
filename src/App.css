@@ -32,7 +32,7 @@
   }
 }
 
-
+/* CSS for popup windows */
 .modal {
   font-size: 12px;
 }
@@ -76,4 +76,100 @@
   width: 300px;
   height: 177px;
   border-radius: 8px;
+}
+/* End of CSS for popup windows */
+
+/* CSS for game page */
+#game-container {
+  display: grid;
+  grid-template-columns: 14% 14% 14% 16% 14% 14% 14%;
+  grid-template-rows: 160px 480px auto;
+}
+
+#avatar-holder {
+  background-color: yellow;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+#orders-holder {
+  background-color: red;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+#serve-holder {
+  background-color: blue;
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+#trash-holder {
+  background-color: white;
+  grid-column-start: 4;
+  grid-column-end: 5;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+#washer-holder {
+  background-color: black;
+  grid-column-start: 5;
+  grid-column-end: 6;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+#tips-holder {
+  background-color: green;
+  grid-column-start: 6;
+  grid-column-end: 7;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+#clock-holder {
+  background-color: orange;
+  grid-column-start: 7;
+  grid-column-end: 8;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+#ingredients-holder {
+  background-color: pink;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+#cookspace-holder {
+  background-color: lightblue;
+  grid-column-start: 3;
+  grid-column-end: 6;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+#tools-holder {
+  background-color: brown;
+  grid-column-start: 6;
+  grid-column-end: 8;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+#controlpanel-holder {
+  background-color: darkgreen;
+  grid-column-start: 1;
+  grid-column-end: 8;
+  grid-row-start: 3;
+  grid-row: last-line;
 }
