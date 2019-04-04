@@ -61,7 +61,7 @@ class App extends Component {
               return isEmpty(this.state.user) ? <Redirect to="/login"/> : <Levels user={this.state.user} handleUpdateUserState={this.handleUpdateUserState} handleUpdateLevelState={this.handleUpdateLevelState}/>
             }}/>
           <Route exact path="/game" render={() => {
-              return isEmpty(this.state.user) ? <Redirect to="/login"/> : <Game user={this.state.user} level={this.state.level}/>
+              return isEmpty(this.state.user) ? <Redirect to="/login"/> : <Game user={this.state.user} level={this.state.level} handleUpdateUserState={this.handleUpdateUserState}/>
             }}/>
           <Route exact path="/" render={() => <Redirect to="/profile"/>}/>
         </Switch>

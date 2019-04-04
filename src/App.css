@@ -83,7 +83,7 @@
 #game-container {
   display: grid;
   grid-template-columns: 14% 14% 14% 16% 14% 14% 14%;
-  grid-template-rows: 160px 480px auto;
+  grid-template-rows: 160px 30px 30px 480px auto;
 }
 
 #avatar-holder {
@@ -97,12 +97,37 @@
   align-items: center;
 }
 
+#playername-holder {
+  background-color: orange;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #orders-holder {
   background-color: red;
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#ordername-holder {
+  background-color: green;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #trash-holder {
@@ -111,6 +136,20 @@
   grid-column-end: 4;
   grid-row-start: 1;
   grid-row-end: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#trashname-holder {
+  background-color: purple;
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #serve-holder {
@@ -119,6 +158,20 @@
   grid-column-end: 5;
   grid-row-start: 1;
   grid-row-end: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#servebutton-holder {
+  background-color: green;
+  grid-column-start: 4;
+  grid-column-end: 5;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #washer-holder {
@@ -127,6 +180,20 @@
   grid-column-end: 6;
   grid-row-start: 1;
   grid-row-end: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#washerbutton-holder {
+  background-color: blue;
+  grid-column-start: 5;
+  grid-column-end: 6;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #tips-holder {
@@ -135,6 +202,20 @@
   grid-column-end: 7;
   grid-row-start: 1;
   grid-row-end: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#tipsname-holder {
+  background-color: red;
+  grid-column-start: 6;
+  grid-column-end: 7;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #clock-holder {
@@ -143,36 +224,97 @@
   grid-column-end: 8;
   grid-row-start: 1;
   grid-row-end: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#clockname-holder {
+  background-color: yellow;
+  grid-column-start: 7;
+  grid-column-end: 8;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #ingredients-holder {
   background-color: pink;
   grid-column-start: 1;
   grid-column-end: 3;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  overflow: auto;
+}
+
+#ingredientsname-holder {
+  background-color: red;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #cookspace-holder {
   background-color: lightblue;
   grid-column-start: 3;
   grid-column-end: 6;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#cookspacename-holder {
+  background-color: yellow;
+  grid-column-start: 3;
+  grid-column-end: 6;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #tools-holder {
   background-color: brown;
   grid-column-start: 6;
   grid-column-end: 8;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  overflow: auto;
+}
+
+#toolsname-holder {
+  background-color: white;
+  grid-column-start: 6;
+  grid-column-end: 8;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #controlpanel-holder {
   background-color: darkgreen;
   grid-column-start: 1;
   grid-column-end: 8;
-  grid-row-start: 3;
+  grid-row-start: 5;
   grid-row: last-line;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
