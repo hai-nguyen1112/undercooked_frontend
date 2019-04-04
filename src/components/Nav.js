@@ -12,6 +12,7 @@ const Nav = ({location: {pathname}, user, handleUpdateUserState}) => {
   return (
     <Menu pointing secondary>
       <Menu.Item
+        style={{width: '150px'}}
         name={`Welcome, ${user.username}`}
       />
       <Menu.Item

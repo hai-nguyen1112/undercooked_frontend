@@ -14,7 +14,8 @@ class App extends Component {
     super()
     this.state = {
       user: {},
-      level: {}
+      level: {},
+      loading: true
     }
   }
 
@@ -32,7 +33,7 @@ class App extends Component {
       })
       .then(res => res.json())
       .then(user => {
-        this.setState({user: user})
+        this.setState({user: user, loading: false})
       })
     }
   }
@@ -45,7 +46,6 @@ class App extends Component {
     return (
       <div className="App">
         <Switch>
-          <Route exact path="/" render={() => <Redirect to="/profile"/>}/>
           <Route exact path="/profile" render={() => {
               return isEmpty(this.state.user) ? <Redirect to="/login"/> : <Profile user={this.state.user} handleUpdateUserState={this.handleUpdateUserState}/>
             }}/>
@@ -53,19 +53,20 @@ class App extends Component {
               return isEmpty(this.state.user) ? <LoginForm handleUpdateUserState={this.handleUpdateUserState}/> : <Redirect to="/profile"/>
             }}/>
           <Route exact path="/rules" render={() => {
-              return isEmpty(this.state.user) ? <Redirect to="/login"/> : <Rules user={this.state.user} handleUpdateUserState={this.handleUpdateUserState}/>
+              return isEmpty(this.state.user) && !this.state.loading ? <Redirect to="/login"/> : <Rules user={this.state.user} handleUpdateUserState={this.handleUpdateUserState}/>
             }}/>
           <Route exact path="/leaderboard" render={() => {
-              return isEmpty(this.state.user) ? <Redirect to="/login"/> : <Leaderboard user={this.state.user} handleUpdateUserState={this.handleUpdateUserState}/>
+              return isEmpty(this.state.user) && !this.state.loading ? <Redirect to="/login"/> : <Leaderboard user={this.state.user} handleUpdateUserState={this.handleUpdateUserState}/>
             }}/>
           <Route exact path="/levels" render={() => {
-              return isEmpty(this.state.user) ? <Redirect to="/login"/> : <Levels user={this.state.user} handleUpdateUserState={this.handleUpdateUserState} handleUpdateLevelState={this.handleUpdateLevelState}/>
+              return isEmpty(this.state.user) && !this.state.loading ? <Redirect to="/login"/> : <Levels user={this.state.user} handleUpdateUserState={this.handleUpdateUserState} handleUpdateLevelState={this.handleUpdateLevelState}/>
             }}/>
           <Route exact path="/game/:leveId" render={() => {
               if (this.state.level.id === 1) {
-                return isEmpty(this.state.user) ? <Redirect to="/login"/> : <Game1 user={this.state.user} level={this.state.level}/>
+                return isEmpty(this.state.user) && !this.state.loading ? <Redirect to="/login"/> : <Game1 user={this.state.user} level={this.state.level}/>
               }
             }}/>
+          <Route exact path="/" render={() => <Redirect to="/profile"/>}/>
         </Switch>
       </div>
     )

@@ -10,8 +10,8 @@ class Profile extends Component {
           <Image src={this.props.user.avatar}/>
           <Card>
           <Card.Content>
-            <Card.Header>{this.props.user.username.charAt(0).toUpperCase() + this.props.user.username.slice(1)}</Card.Header>
-            <Card.Description>{this.props.user.bio}</Card.Description>
+            <Card.Header>Chef: {this.props.user.username.charAt(0).toUpperCase() + this.props.user.username.slice(1)}</Card.Header>
+            <Card.Description>Bio: {this.props.user.bio}</Card.Description>
           </Card.Content>
         </Card>
       </div>
