@@ -4,7 +4,12 @@ import {withRouter} from 'react-router-dom'
 
 const ImageTool = props => {
   return (
-    <Image src={props.tool.image} style={{width: "120px", height: "120px", borderRadius: "4px"}}/>
+    <Image
+      draggable={true}
+      onDragStart={() => props.handleUpdateDraggedItemState(props.tool)}
+      src={props.tool.image}
+      style={{width: "120px", height: "120px", borderRadius: "4px"}}
+    />
   )
 }
 

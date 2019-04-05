@@ -3,6 +3,8 @@ import {withRouter, Link} from 'react-router-dom'
 import ImageIngredient from '../components/ImageIngredient'
 import ImageTool from '../components/ImageTool'
 import ImageOrder from '../components/ImageOrder'
+import Serve from '../components/Serve'
+import {isEmpty} from 'lodash'
 // var _ = require('underscore')
 
 class Game extends Component {
@@ -11,7 +13,10 @@ class Game extends Component {
     this.state = {
       ingredients: [],
       tools: [],
-      newOrder: {}
+      newOrder: {},
+      draggedItem: {},
+      serveGroup: [],
+      recipes: []
     }
   }
 
@@ -46,6 +51,30 @@ class Game extends Component {
     this.props.level.recipes.forEach(recipe => orders.push(recipe))
     let randomOrder = this.unique(orders)[Math.floor(Math.random() * this.unique(orders).length)]
     this.setState({newOrder: randomOrder})
+
+    this.setState({recipes: this.props.level.recipes})
+  }
+
+  handleUpdateDraggedItemState = item => {
+    console.log("Dragged Item:", item)
+    this.setState({draggedItem: item})
+  }
+
+  handleDropOfPlateAndCookedDishOnServe = () => {
+    console.log("I'm here")
+    let cookedDish
+    let dishName
+    let serveGroup = this.state.serveGroup
+    if (isEmpty(serveGroup)) {
+      serveGroup.push(this.state.draggedItem)
+    } else {
+      serveGroup.push(this.state.draggedItem)
+      dishName = serveGroup.filter(item => item.name !== 'clean_plate')[0].name
+      cookedDish = this.state.recipes.filter(recipe => recipe.name === dishName)[0]
+      serveGroup = []
+      serveGroup.push(cookedDish)
+    }
+    this.setState({serveGroup: serveGroup})
   }
 
   unique = (array) => {
@@ -60,8 +89,8 @@ class Game extends Component {
   }
 
   render() {
-    let ingredientCards = this.state.ingredients.map(ingredient => <ImageIngredient key={ingredient.name} ingredient={ingredient}/>)
-    let toolCards = this.state.tools.map(tool => <ImageTool key={tool.name} tool={tool}/>)
+    let ingredientCards = this.state.ingredients.map(ingredient => <ImageIngredient key={ingredient.name} ingredient={ingredient} handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}/>)
+    let toolCards = this.state.tools.map(tool => <ImageTool key={tool.name} tool={tool} handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}/>)
     return (
       <div className="container" id="game-container">
         <div className="item" id="avatar-holder"><img id="game-avatar" alt="avatar" style={{width: "120px", height: "120px", borderRadius: "4px"}} src={this.props.user.avatar}/></div>
@@ -70,7 +99,13 @@ class Game extends Component {
         <div className="item" id="ordername-holder">New Order</div>
         <div className="item" id="trash-holder"></div>
         <div className="item" id="trashname-holder">Trash Can</div>
-        <div className="item" id="serve-holder"></div>
+        <div className="item" id="serve-holder"
+          onDragOver={e => {e.preventDefault(); e.stopPropagation()}}
+          onDrop={e => {e.preventDefault(); this.handleDropOfPlateAndCookedDishOnServe()}}>
+            <Serve
+              serveGroup={this.state.serveGroup}
+            />
+        </div>
         <div className="item" id="servebutton-holder"><button>Serve Button</button></div>
         <div className="item" id="washer-holder"></div>
         <div className="item" id="washerbutton-holder"><button>Wash Button</button></div>
