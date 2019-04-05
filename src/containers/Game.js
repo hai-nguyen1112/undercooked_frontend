@@ -1,13 +1,17 @@
 import React, {Component} from 'react'
 import {withRouter, Link} from 'react-router-dom'
-var _ = require('underscore')
+import ImageIngredient from '../components/ImageIngredient'
+import ImageTool from '../components/ImageTool'
+import ImageOrder from '../components/ImageOrder'
+// var _ = require('underscore')
 
 class Game extends Component {
   constructor() {
     super()
     this.state = {
       ingredients: [],
-      tools: []
+      tools: [],
+      newOrder: {}
     }
   }
 
@@ -20,32 +24,49 @@ class Game extends Component {
     let ingredients = []
     this.props.level.recipes.forEach(recipe => {
       recipe.ingredients.forEach(ingredient => {
-        if (!ingredients.includes(ingredient)) {
           ingredients.push(ingredient)
-        }
       })
     })
-    this.setState({ingredients: ingredients})
+    this.setState({ingredients: this.unique(ingredients)})
 
     let tools = []
+    if (this.props.level.id === 1) {
+      tools.push(this.props.level.plates.find(plate => plate.name === "clean_plate"))
+    } else {
+      tools.push(this.props.level.plates.find(plate => plate.name === "dirty_plate"))
+    }
     this.props.level.recipes.forEach(recipe => {
       recipe.tools.forEach(tool => {
-        if (!tools.includes(tool)) {
           tools.push(tool)
-        }
       })
     })
-    this.setState({tools: tools})
+    this.setState({tools: this.unique(tools)})
+
+    let orders = []
+    this.props.level.recipes.forEach(recipe => orders.push(recipe))
+    let randomOrder = this.unique(orders)[Math.floor(Math.random() * this.unique(orders).length)]
+    this.setState({newOrder: randomOrder})
+  }
+
+  unique = (array) => {
+    let storage = []
+    let newArray = []
+    array.forEach(object => {
+      if (!storage.includes(object.name)) {
+        storage.push(object.name)
+        newArray.push(object)}
+      })
+    return newArray
   }
 
   render() {
-    let ingredientCards = this.state.ingredients.map(ingredient => <img key={ingredient.id} alt="" src={ingredient.image} style={{width: "120px", height: "120px", borderRadius: "4px"}}/>)
-    let toolCards = this.state.tools.map(tool => <img key={tool.id} alt="" src={tool.image} style={{width: "120px", height: "120px", borderRadius: "4px"}}/>)
+    let ingredientCards = this.state.ingredients.map(ingredient => <ImageIngredient key={ingredient.name} ingredient={ingredient}/>)
+    let toolCards = this.state.tools.map(tool => <ImageTool key={tool.name} tool={tool}/>)
     return (
       <div className="container" id="game-container">
         <div className="item" id="avatar-holder"><img id="game-avatar" alt="avatar" style={{width: "120px", height: "120px", borderRadius: "4px"}} src={this.props.user.avatar}/></div>
         <div className="item" id="playername-holder">Chef: Hai</div>
-        <div className="item" id="orders-holder"><img alt="order" style={{width: "120px", height: "120px", borderRadius: "4px"}} src={this.props.level.recipes[0].image}/></div>
+        <div className="item" id="orders-holder"><ImageOrder order={this.state.newOrder}/></div>
         <div className="item" id="ordername-holder">New Order</div>
         <div className="item" id="trash-holder"></div>
         <div className="item" id="trashname-holder">Trash Can</div>
