@@ -90,17 +90,28 @@ class Game extends Component {
     let cookedDish
     let dishName
     let serveGroup = this.state.serveGroup
+    let draggedItem = JSON.parse(JSON.stringify(this.state.draggedItem))
+    let copyOfCookedDish
     if (isEmpty(serveGroup)) {
-      serveGroup.push(this.state.draggedItem)
+      if (this.state.draggedItem.kind === 'tool') {
+        draggedItem.kind = 'serve_tool'
+      } else if (this.state.draggedItem.kind === 'ingredient') {
+        draggedItem.kind = 'serve_ingredient'
+      }
+      serveGroup.push(draggedItem)
+      console.log(serveGroup)
       this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
     } else if (serveGroup.length === 1 && serveGroup[0].kind !== 'recipe') {
       if (serveGroup[0].kind !== this.state.draggedItem.kind) {
         serveGroup.push(this.state.draggedItem)
         dishName = serveGroup.filter(item => item.name !== 'clean_plate')[0].name
         cookedDish = this.state.recipes.filter(recipe => recipe.name === dishName)[0]
+        copyOfCookedDish = JSON.parse(JSON.stringify(cookedDish))
+        copyOfCookedDish.kind = 'serve_recipe'
         serveGroup = []
-        serveGroup.push(cookedDish)
+        serveGroup.push(copyOfCookedDish)
         this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+        console.log("copy cooked dish:", copyOfCookedDish)
         console.log("cooked dish:", cookedDish)
       }
     }
@@ -109,7 +120,7 @@ class Game extends Component {
 
   handleClickOfServeButton = () => {
     if (!isEmpty(this.state.serveGroup)) {
-      if (this.state.serveGroup[0].kind === 'recipe') {
+      if (this.state.serveGroup[0].kind === 'serve_recipe') {
         if (this.state.serveGroup[0].name === this.state.newOrder.name) {
           this.setState({tips: this.state.tips + 10})
           this.setState({serveGroup: []})
@@ -125,8 +136,26 @@ class Game extends Component {
   }
 
   handleDropOnTrashCan = () => {
-    this.setState({serveGroup: []})
-    this.addShakeClass(".trash-image")
+    if (this.state.draggedItem.kind === 'serve_recipe') {
+      this.setState({serveGroup: []})
+      this.addShakeClass(".trash-image")
+    }
+    if (this.state.draggedItem.kind === 'serve_tool') {
+      this.setState({serveGroup: []})
+      this.addShakeClass(".trash-image")
+    }
+    if (this.state.draggedItem.kind === 'serve_ingredient') {
+      this.setState({serveGroup: []})
+      this.addShakeClass(".trash-image")
+    }
+    if (this.state.draggedItem.kind === 'tool') {
+      this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+      this.addShakeClass(".trash-image")
+    }
+    if (this.state.draggedItem.kind === 'ingredient') {
+      this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+      this.addShakeClass(".trash-image")
+    }
   }
 
   addShakeClass = selector => {
@@ -159,7 +188,7 @@ class Game extends Component {
       <div className="container" id="game-container">
         <div className="item" id="avatar-holder"><img id="game-avatar" alt="avatar" style={{width: "120px", height: "120px", borderRadius: "4px"}} src={this.props.user.avatar}/></div>
         <div className="item" id="playername-holder">Chef: Hai</div>
-        <div className="item" id="orders-holder"><ImageOrder order={this.state.newOrder}/></div>
+        <div className="item" id="orders-holder"><ImageOrder order={this.state.newOrder} handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}/></div>
         <div className="item" id="ordername-holder">New Order</div>
         <div className="item" id="trash-holder"
           onDragOver={e => {e.preventDefault(); e.stopPropagation()}}

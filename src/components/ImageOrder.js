@@ -11,7 +11,13 @@ const ImageOrder = props => {
       ?
       null
       :
-      <Image src={props.order.image} style={{width: "120px", height: "120px", borderRadius: "4px"}}/>
+      <Image
+        className="order-image"
+        draggable={true}
+        onDragStart={() => props.handleUpdateDraggedItemState(props.order)}
+        src={props.order.image}
+        style={{width: "120px", height: "120px", borderRadius: "4px"}}
+      />
     }
     </>
   )
