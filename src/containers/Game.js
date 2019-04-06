@@ -76,9 +76,30 @@ class Game extends Component {
   }
 
   checkClockToEndGame = () => {
+    let patchData = {}
     if (this.state.clock === 0) {
       clearInterval(clockCountdownInterval)
       this.setState({popupOpen: true})
+      if (this.state.tips >= this.props.level.qualified_points) {
+        patchData["wins"] = this.props.user.wins + 1
+      } else {
+        patchData["losses"] = this.props.user.losses + 1
+      }
+      patchData["games_played"] = this.props.user.games_played + 1
+      if (this.state.tips > this.props.user.highest_score) {
+        patchData["highest_score"] = this.state.tips
+      }
+      console.log(patchData)
+      fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}`, {
+        method: "PATCH",
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(patchData)
+      }).then(res => res.json())
+        .then(console.log)
     }
   }
 

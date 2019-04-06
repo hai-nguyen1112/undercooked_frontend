@@ -13,7 +13,6 @@ const RecipePopup = props => {
       </div>
       <div className="header">Recipes for Level {props.level.id}</div>
       <div className="content">
-        {' '}
         {instructionCards}
       </div>
       <div className="actions">
