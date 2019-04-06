@@ -7,11 +7,15 @@ import Serve from '../components/Serve'
 import {isEmpty} from 'lodash'
 import Tips from '../components/Tips'
 import Trash from '../components/Trash'
+import Clock from '../components/Clock'
+import EndGamePopUp from '../components/EndGamePopUp'
+import RecipeReminderPopup from '../components/RecipeReminderPopup'
+var clockCountdownInterval
 // var _ = require('underscore')
 
 class Game extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       ingredients: [],
       tools: [],
@@ -19,7 +23,10 @@ class Game extends Component {
       draggedItem: {},
       serveGroup: [],
       recipes: [],
-      tips: 0
+      tips: 0,
+      clock: props.level.clock,
+      popupOpen: false,
+      popupRecipeOpen: false
     }
   }
 
@@ -53,9 +60,26 @@ class Game extends Component {
     let orders = []
     this.props.level.recipes.forEach(recipe => orders.push(recipe))
     let randomOrder = this.unique(orders)[Math.floor(Math.random() * this.unique(orders).length)]
-    this.setState({newOrder: randomOrder})
+    let copyOfRandomOrder = JSON.parse(JSON.stringify(randomOrder))
+    copyOfRandomOrder.kind = 'order'
+    this.setState({newOrder: copyOfRandomOrder})
 
     this.setState({recipes: this.props.level.recipes})
+
+    clockCountdownInterval = setInterval(this.handleCountdownClockState, 1000)
+  }
+
+  handleCountdownClockState = () => {
+    let clock = this.state.clock
+    this.setState({clock: clock - 1})
+    this.checkClockToEndGame()
+  }
+
+  checkClockToEndGame = () => {
+    if (this.state.clock === 0) {
+      clearInterval(clockCountdownInterval)
+      this.setState({popupOpen: true})
+    }
   }
 
   handleUpdateDraggedItemState = item => {
@@ -92,30 +116,32 @@ class Game extends Component {
     let serveGroup = this.state.serveGroup
     let draggedItem = JSON.parse(JSON.stringify(this.state.draggedItem))
     let copyOfCookedDish
-    if (isEmpty(serveGroup)) {
-      if (this.state.draggedItem.kind === 'tool') {
-        draggedItem.kind = 'serve_tool'
-      } else if (this.state.draggedItem.kind === 'ingredient') {
-        draggedItem.kind = 'serve_ingredient'
-      }
-      serveGroup.push(draggedItem)
-      console.log(serveGroup)
-      this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
-    } else if (serveGroup.length === 1 && serveGroup[0].kind !== 'recipe') {
-      if (serveGroup[0].kind !== this.state.draggedItem.kind) {
-        serveGroup.push(this.state.draggedItem)
-        dishName = serveGroup.filter(item => item.name !== 'clean_plate')[0].name
-        cookedDish = this.state.recipes.filter(recipe => recipe.name === dishName)[0]
-        copyOfCookedDish = JSON.parse(JSON.stringify(cookedDish))
-        copyOfCookedDish.kind = 'serve_recipe'
-        serveGroup = []
-        serveGroup.push(copyOfCookedDish)
+    if (this.state.draggedItem.kind !== 'user' && this.state.draggedItem.kind !== 'level' && this.state.draggedItem.kind !== 'order') {
+      if (isEmpty(serveGroup)) {
+        if (this.state.draggedItem.kind === 'tool') {
+          draggedItem.kind = 'serve_tool'
+        } else if (this.state.draggedItem.kind === 'ingredient') {
+          draggedItem.kind = 'serve_ingredient'
+        }
+        serveGroup.push(draggedItem)
+        console.log(serveGroup)
         this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
-        console.log("copy cooked dish:", copyOfCookedDish)
-        console.log("cooked dish:", cookedDish)
+      } else if (serveGroup.length === 1 && serveGroup[0].kind !== 'recipe') {
+        if (serveGroup[0].kind !== this.state.draggedItem.kind) {
+          serveGroup.push(this.state.draggedItem)
+          dishName = serveGroup.filter(item => item.name !== 'clean_plate')[0].name
+          cookedDish = this.state.recipes.filter(recipe => recipe.name === dishName)[0]
+          copyOfCookedDish = JSON.parse(JSON.stringify(cookedDish))
+          copyOfCookedDish.kind = 'serve_recipe'
+          serveGroup = []
+          serveGroup.push(copyOfCookedDish)
+          this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+          console.log("copy cooked dish:", copyOfCookedDish)
+          console.log("cooked dish:", cookedDish)
+        }
       }
+      this.setState({serveGroup: serveGroup})
     }
-    this.setState({serveGroup: serveGroup})
   }
 
   handleClickOfServeButton = () => {
@@ -167,7 +193,13 @@ class Game extends Component {
     let orders = []
     this.props.level.recipes.forEach(recipe => orders.push(recipe))
     let randomOrder = this.unique(orders)[Math.floor(Math.random() * this.unique(orders).length)]
-    this.setState({newOrder: randomOrder})
+    let copyOfRandomOrder = JSON.parse(JSON.stringify(randomOrder))
+    copyOfRandomOrder.kind = 'order'
+    this.setState({newOrder: copyOfRandomOrder})
+  }
+
+  updatePopupRecipeOpenState = () => {
+    this.setState({popupRecipeOpen: !this.state.popupRecipeOpen})
   }
 
   unique = (array) => {
@@ -186,14 +218,37 @@ class Game extends Component {
     let toolCards = this.state.tools.map(tool => <ImageTool key={tool.name} tool={tool} handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}/>)
     return (
       <div className="container" id="game-container">
-        <div className="item" id="avatar-holder"><img id="game-avatar" alt="avatar" style={{width: "120px", height: "120px", borderRadius: "4px"}} src={this.props.user.avatar}/></div>
-        <div className="item" id="playername-holder">Chef: Hai</div>
-        <div className="item" id="orders-holder"><ImageOrder order={this.state.newOrder} handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}/></div>
+        <RecipeReminderPopup
+          open={this.state.popupRecipeOpen}
+          level={this.props.level}
+          updatePopupRecipeOpenState={this.updatePopupRecipeOpenState}
+        />
+        <EndGamePopUp
+          open={this.state.popupOpen}
+          handleUpdateUserState={this.props.handleUpdateUserState}
+          tips={this.state.tips}
+          user={this.props.user}
+          level={this.props.level}
+        />
+        <div className="item" id="avatar-holder"><img
+                                                    draggable={true}
+                                                    onDragStart={() => this.handleUpdateDraggedItemState(this.props.user)}
+                                                    id="game-avatar"
+                                                    alt="avatar"
+                                                    style={{width: "120px", height: "120px", borderRadius: "4px"}}
+                                                    src={this.props.user.avatar}
+                                                  />
+        </div>
+        <div className="item" id="playername-holder">Chef: {this.props.user.username.charAt(0).toUpperCase() + this.props.user.username.slice(1)}</div>
+        <div className="item" id="orders-holder" onClick={this.updatePopupRecipeOpenState}><ImageOrder order={this.state.newOrder} handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}/></div>
         <div className="item" id="ordername-holder">New Order</div>
         <div className="item" id="trash-holder"
           onDragOver={e => {e.preventDefault(); e.stopPropagation()}}
           onDrop={e => {e.preventDefault(); this.handleDropOnTrashCan()}}>
-          <Trash level={this.props.level}/>
+          <Trash
+            level={this.props.level}
+            handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}
+          />
         </div>
         <div className="item" id="trashname-holder">Trash Can</div>
         <div className="item" id="serve-holder"
@@ -209,7 +264,7 @@ class Game extends Component {
         <div className="item" id="washerbutton-holder"><button>Wash Button</button></div>
         <div className="item" id="tips-holder"><Tips tips={this.state.tips}/></div>
         <div className="item" id="tipsname-holder">Tips</div>
-        <div className="item" id="clock-holder">Counting down: 90 seconds</div>
+        <div className="item" id="clock-holder"><Clock clock={this.state.clock}/></div>
         <div className="item" id="clockname-holder">Clock</div>
         <div className="item" id="ingredients-holder">{ingredientCards}</div>
         <div className="item" id="ingredientsname-holder">List of ingredients</div>
