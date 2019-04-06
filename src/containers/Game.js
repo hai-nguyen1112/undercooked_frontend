@@ -5,6 +5,8 @@ import ImageTool from '../components/ImageTool'
 import ImageOrder from '../components/ImageOrder'
 import Serve from '../components/Serve'
 import {isEmpty} from 'lodash'
+import Tips from '../components/Tips'
+import Trash from '../components/Trash'
 // var _ = require('underscore')
 
 class Game extends Component {
@@ -16,7 +18,8 @@ class Game extends Component {
       newOrder: {},
       draggedItem: {},
       serveGroup: [],
-      recipes: []
+      recipes: [],
+      tips: 0
     }
   }
 
@@ -60,21 +63,82 @@ class Game extends Component {
     this.setState({draggedItem: item})
   }
 
+  eliminateDraggedItemFromTheirOriginalState = draggedItem => {
+    let items
+    if (draggedItem.kind === 'ingredient') {
+      items = this.state.ingredients.filter(item => item.name !== draggedItem.name)
+      this.setState({ingredients: items})
+      setTimeout(() => {return this.updateIngredientsState(draggedItem, items)}, 1000)
+    } else if (draggedItem.kind === 'tool') {
+      items = this.state.tools.filter(item => item.name !== draggedItem.name)
+      this.setState({tools: items})
+      setTimeout(() => {return this.updateToolsState(draggedItem, items)}, 1000)
+    }
+  }
+
+  updateIngredientsState = (draggedItem, items) => {
+    items.push(draggedItem)
+    this.setState({ingredients: items})
+  }
+
+  updateToolsState = (draggedItem, items) => {
+    items.push(draggedItem)
+    this.setState({tools: items})
+  }
+
   handleDropOfPlateAndCookedDishOnServe = () => {
-    console.log("I'm here")
     let cookedDish
     let dishName
     let serveGroup = this.state.serveGroup
     if (isEmpty(serveGroup)) {
       serveGroup.push(this.state.draggedItem)
-    } else {
-      serveGroup.push(this.state.draggedItem)
-      dishName = serveGroup.filter(item => item.name !== 'clean_plate')[0].name
-      cookedDish = this.state.recipes.filter(recipe => recipe.name === dishName)[0]
-      serveGroup = []
-      serveGroup.push(cookedDish)
+      this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+    } else if (serveGroup.length === 1 && serveGroup[0].kind !== 'recipe') {
+      if (serveGroup[0].kind !== this.state.draggedItem.kind) {
+        serveGroup.push(this.state.draggedItem)
+        dishName = serveGroup.filter(item => item.name !== 'clean_plate')[0].name
+        cookedDish = this.state.recipes.filter(recipe => recipe.name === dishName)[0]
+        serveGroup = []
+        serveGroup.push(cookedDish)
+        this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+        console.log("cooked dish:", cookedDish)
+      }
     }
     this.setState({serveGroup: serveGroup})
+  }
+
+  handleClickOfServeButton = () => {
+    if (!isEmpty(this.state.serveGroup)) {
+      if (this.state.serveGroup[0].kind === 'recipe') {
+        if (this.state.serveGroup[0].name === this.state.newOrder.name) {
+          this.setState({tips: this.state.tips + 10})
+          this.setState({serveGroup: []})
+          this.setState({newOrder: {}})
+          setTimeout(this.updateNewOrderState, 1500)
+        } else {
+          this.addShakeClass('.serve-image')
+        }
+      } else {
+        this.addShakeClass('.serve-image')
+      }
+    }
+  }
+
+  handleDropOnTrashCan = () => {
+    this.setState({serveGroup: []})
+    this.addShakeClass(".trash-image")
+  }
+
+  addShakeClass = selector => {
+    document.querySelector(selector).classList.add('shake')
+    setTimeout(() => document.querySelector(selector).classList.remove('shake'), 500)
+  }
+
+  updateNewOrderState = () => {
+    let orders = []
+    this.props.level.recipes.forEach(recipe => orders.push(recipe))
+    let randomOrder = this.unique(orders)[Math.floor(Math.random() * this.unique(orders).length)]
+    this.setState({newOrder: randomOrder})
   }
 
   unique = (array) => {
@@ -97,19 +161,24 @@ class Game extends Component {
         <div className="item" id="playername-holder">Chef: Hai</div>
         <div className="item" id="orders-holder"><ImageOrder order={this.state.newOrder}/></div>
         <div className="item" id="ordername-holder">New Order</div>
-        <div className="item" id="trash-holder"></div>
+        <div className="item" id="trash-holder"
+          onDragOver={e => {e.preventDefault(); e.stopPropagation()}}
+          onDrop={e => {e.preventDefault(); this.handleDropOnTrashCan()}}>
+          <Trash level={this.props.level}/>
+        </div>
         <div className="item" id="trashname-holder">Trash Can</div>
         <div className="item" id="serve-holder"
           onDragOver={e => {e.preventDefault(); e.stopPropagation()}}
           onDrop={e => {e.preventDefault(); this.handleDropOfPlateAndCookedDishOnServe()}}>
-            <Serve
-              serveGroup={this.state.serveGroup}
-            />
+          <Serve
+            handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}
+            serveGroup={this.state.serveGroup}
+          />
         </div>
-        <div className="item" id="servebutton-holder"><button>Serve Button</button></div>
+        <div className="item" id="servebutton-holder"><button onClick={this.handleClickOfServeButton}>Serve Button</button></div>
         <div className="item" id="washer-holder"></div>
         <div className="item" id="washerbutton-holder"><button>Wash Button</button></div>
-        <div className="item" id="tips-holder">$100</div>
+        <div className="item" id="tips-holder"><Tips tips={this.state.tips}/></div>
         <div className="item" id="tipsname-holder">Tips</div>
         <div className="item" id="clock-holder">Counting down: 90 seconds</div>
         <div className="item" id="clockname-holder">Clock</div>
