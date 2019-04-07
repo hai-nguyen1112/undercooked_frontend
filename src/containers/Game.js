@@ -118,11 +118,11 @@ class Game extends Component {
     if (draggedItem.kind === 'ingredient') {
       items = this.state.ingredients.filter(item => item.name !== draggedItem.name)
       this.setState({ingredients: items})
-      setTimeout(() => {return this.updateIngredientsState(draggedItem, items)}, 1000)
+      setTimeout(() => {return this.updateIngredientsState(draggedItem, items)}, 500)
     } else if (draggedItem.kind === 'tool') {
       items = this.state.tools.filter(item => item.name !== draggedItem.name)
       this.setState({tools: items})
-      setTimeout(() => {return this.updateToolsState(draggedItem, items)}, 1000)
+      setTimeout(() => {return this.updateToolsState(draggedItem, items)}, 500)
     }
   }
 
@@ -180,7 +180,7 @@ class Game extends Component {
           this.setState({tips: this.state.tips + 10})
           this.setState({serveGroup: []})
           this.setState({newOrder: {}})
-          setTimeout(this.updateNewOrderState, 1500)
+          setTimeout(this.updateNewOrderState, 500)
         } else {
           this.addShakeClassMaster('.master-avatar')
           this.setState({masterSpeech: "You cooked the wrong dish. Please toss it."})

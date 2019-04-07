@@ -5,6 +5,7 @@ import {withRouter} from 'react-router-dom'
 const ImageIngredient = props => {
   return (
     <Image
+      className="ingredient-image"
       draggable={true}
       onDragStart={() => props.handleUpdateDraggedItemState(props.ingredient)}
       src={props.ingredient.image}

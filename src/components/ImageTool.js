@@ -5,6 +5,7 @@ import {withRouter} from 'react-router-dom'
 const ImageTool = props => {
   return (
     <Image
+      className="image-tool"
       draggable={true}
       onDragStart={() => props.handleUpdateDraggedItemState(props.tool)}
       src={props.tool.image}

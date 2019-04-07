@@ -447,3 +447,39 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+.order-image {
+  animation: orders-holder 1s linear;
+}
+@keyframes orders-holder {
+ 0%   {
+ transform: translateY(-50%);
+ }
+ 100% {
+ transform: translateY(0%);
+ }
+}
+
+.ingredient-image {
+  animation: ingredients-holder 1s linear;
+}
+@keyframes ingredients-holder {
+ 0%   {
+ transform: translateY(-50%);
+ }
+ 100% {
+ transform: translateY(0%);
+ }
+}
+
+.image-tool {
+  animation: tools-holder 1s linear;
+}
+@keyframes tools-holder {
+ 0%   {
+ transform: translateY(-50%);
+ }
+ 100% {
+ transform: translateY(0%);
+ }
+}
