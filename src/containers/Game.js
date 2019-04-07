@@ -25,7 +25,7 @@ class Game extends Component {
       serveGroup: [],
       recipes: [],
       tips: 0,
-      clock: 2,
+      clock: props.level.clock,
       popupOpen: false,
       popupRecipeOpen: false,
       masterSpeech: 'Welcome to Overcooked kitchen!'
