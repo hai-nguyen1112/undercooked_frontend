@@ -88,24 +88,30 @@ class Game extends Component {
       this.setState({popupOpen: true})
       if (this.state.tips >= this.props.level.qualified_points) {
         patchData["wins"] = this.props.user.wins + 1
+        patchData["games_played"] = this.props.user.games_played + 1
       } else {
         patchData["losses"] = this.props.user.losses + 1
+        patchData["games_played"] = this.props.user.games_played + 1
       }
-      patchData["games_played"] = this.props.user.games_played + 1
       if (this.state.tips > this.props.user.highest_score) {
         patchData["highest_score"] = this.state.tips
       }
-      fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}`, {
-        method: "PATCH",
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(patchData)
-      }).then(res => res.json())
-        .then(console.log)
+      this.patchUserData(patchData, this.props.user.id)
     }
+  }
+
+  patchUserData = (patchData, userId) => {
+    fetch(`http://localhost:3000/api/v1/users/${userId}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(patchData)
+    }).then(res => res.json())
+      .then(updatedUser => {
+        this.props.handleUpdateUserState(updatedUser)
+      })
   }
 
   handleUpdateDraggedItemState = item => {
