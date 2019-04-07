@@ -176,6 +176,20 @@ class Game extends Component {
     }
   }
 
+  updateServeGroupState = () => {
+    this.setState({serveGroup: []})
+  }
+
+  addFadeOutClass = selector => {
+    document.querySelector(selector).classList.add('fadeOut')
+    // setTimeout(() => document.querySelector(selector).classList.remove('shake'), 500)
+  }
+
+  clearNewOrderState = () => {
+    this.setState({newOrder: {}})
+    setTimeout(this.updateNewOrderState, 500)
+  }
+
   handleClickOfServeButton = () => {
     if (!isEmpty(this.state.serveGroup)) {
       if (this.state.serveGroup[0].kind === 'serve_recipe') {
@@ -184,9 +198,10 @@ class Game extends Component {
           this.setState({masterSpeech: "Great job."})
           setTimeout(this.clearMasterSpeech, 1500)
           this.setState({tips: this.state.tips + 10})
-          this.setState({serveGroup: []})
-          this.setState({newOrder: {}})
-          setTimeout(this.updateNewOrderState, 500)
+          this.addFadeOutClass('.serve-image')
+          setTimeout(this.updateServeGroupState, 500)
+          this.addFadeOutClass('.order-image')
+          setTimeout(this.clearNewOrderState, 500)
         } else {
           this.addShakeClassMaster('.master-avatar')
           this.setState({masterSpeech: "You cooked the wrong dish. Please toss it."})

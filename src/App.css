@@ -448,7 +448,7 @@
   align-items: center;
 }
 
-.order-image {
+/* .order-image {
   animation: orders-holder 1s linear;
 }
 @keyframes orders-holder {
@@ -458,9 +458,9 @@
  100% {
  transform: translateY(0%);
  }
-}
+} */
 
-.ingredient-image {
+/* .ingredient-image {
   animation: ingredients-holder 1s linear;
 }
 @keyframes ingredients-holder {
@@ -470,9 +470,9 @@
  100% {
  transform: translateY(0%);
  }
-}
+} */
 
-.image-tool {
+/* .image-tool {
   animation: tools-holder 1s linear;
 }
 @keyframes tools-holder {
@@ -482,4 +482,37 @@
  100% {
  transform: translateY(0%);
  }
+} */
+
+.order-image {
+  opacity: 1;
+  animation: fade 2s linear;
+}
+@keyframes fade {
+  0% { opacity: 0 }
+  50% { opacity: 1 }
+}
+
+.ingredient-image {
+  opacity: 1;
+  animation: fade 2s linear;
+}
+@keyframes fade {
+  0% { opacity: 0 }
+  50% { opacity: 1 }
+}
+
+.image-tool {
+  opacity: 1;
+  animation: fade 2s linear;
+}
+@keyframes fade {
+  0% { opacity: 0 }
+  50% { opacity: 1 }
+}
+
+.fadeOut {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
