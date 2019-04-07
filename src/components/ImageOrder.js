@@ -12,6 +12,7 @@ const ImageOrder = props => {
       null
       :
       <Image
+        key={props.order.name}
         className="order-image"
         draggable={true}
         onDragStart={() => props.handleUpdateDraggedItemState(props.order)}
