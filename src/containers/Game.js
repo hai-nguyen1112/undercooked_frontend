@@ -10,6 +10,7 @@ import Trash from '../components/Trash'
 import Clock from '../components/Clock'
 import EndGamePopUp from '../components/EndGamePopUp'
 import RecipeReminderPopup from '../components/RecipeReminderPopup'
+import Master from '../components/Master'
 var clockCountdownInterval
 // var _ = require('underscore')
 
@@ -24,9 +25,10 @@ class Game extends Component {
       serveGroup: [],
       recipes: [],
       tips: 0,
-      clock: props.level.clock,
+      clock: 2,
       popupOpen: false,
-      popupRecipeOpen: false
+      popupRecipeOpen: false,
+      masterSpeech: 'Welcome to Overcooked kitchen!'
     }
   }
 
@@ -47,6 +49,7 @@ class Game extends Component {
     let tools = []
     if (this.props.level.id === 1) {
       tools.push(this.props.level.plates.find(plate => plate.name === "clean_plate"))
+      document.getElementById('wash-button').disabled = true
     } else {
       tools.push(this.props.level.plates.find(plate => plate.name === "dirty_plate"))
     }
@@ -67,6 +70,9 @@ class Game extends Component {
     this.setState({recipes: this.props.level.recipes})
 
     clockCountdownInterval = setInterval(this.handleCountdownClockState, 1000)
+
+    this.addShakeClassMaster('.master-avatar')
+    setTimeout(this.clearMasterSpeech, 1500)
   }
 
   handleCountdownClockState = () => {
@@ -89,7 +95,6 @@ class Game extends Component {
       if (this.state.tips > this.props.user.highest_score) {
         patchData["highest_score"] = this.state.tips
       }
-      console.log(patchData)
       fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}`, {
         method: "PATCH",
         mode: 'cors',
@@ -169,16 +174,39 @@ class Game extends Component {
     if (!isEmpty(this.state.serveGroup)) {
       if (this.state.serveGroup[0].kind === 'serve_recipe') {
         if (this.state.serveGroup[0].name === this.state.newOrder.name) {
+          this.addShakeClassMaster('.master-avatar')
+          this.setState({masterSpeech: "Great job."})
+          setTimeout(this.clearMasterSpeech, 1500)
           this.setState({tips: this.state.tips + 10})
           this.setState({serveGroup: []})
           this.setState({newOrder: {}})
           setTimeout(this.updateNewOrderState, 1500)
         } else {
-          this.addShakeClass('.serve-image')
+          this.addShakeClassMaster('.master-avatar')
+          this.setState({masterSpeech: "You cooked the wrong dish. Please toss it."})
+          setTimeout(this.clearMasterSpeech, 1500)
         }
       } else {
-        this.addShakeClass('.serve-image')
+        if (this.state.serveGroup[0].kind === 'serve_tool') {
+          this.addShakeClassMaster('.master-avatar')
+          this.setState({masterSpeech: "You can't serve with an empty plate. Please put something on it."})
+          setTimeout(this.clearMasterSpeech, 1500)
+        } else if (this.state.serveGroup[0].kind === 'serve_ingredient') {
+          if (this.state.serveGroup[0].name === this.state.newOrder.name) {
+            this.addShakeClassMaster('.master-avatar')
+            this.setState({masterSpeech: "You can't serve without a plate. Please give it a plate."})
+            setTimeout(this.clearMasterSpeech, 1500)
+          } else {
+            this.addShakeClassMaster('.master-avatar')
+            this.setState({masterSpeech: "You cooked the wrong dish. Please toss it."})
+            setTimeout(this.clearMasterSpeech, 1500)
+          }
+        }
       }
+    } else {
+      this.addShakeClassMaster('.master-avatar')
+      this.setState({masterSpeech: "Hey, you have to cook a dish before serving."})
+      setTimeout(this.clearMasterSpeech, 1500)
     }
   }
 
@@ -196,18 +224,33 @@ class Game extends Component {
       this.addShakeClass(".trash-image")
     }
     if (this.state.draggedItem.kind === 'tool') {
+      this.addShakeClassMaster('.master-avatar')
+      this.setState({masterSpeech: "Please don't throw usable tools away."})
+      setTimeout(this.clearMasterSpeech, 1500)
       this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
       this.addShakeClass(".trash-image")
     }
     if (this.state.draggedItem.kind === 'ingredient') {
+      this.addShakeClassMaster('.master-avatar')
+      this.setState({masterSpeech: "Please don't throw fresh ingredients away."})
+      setTimeout(this.clearMasterSpeech, 1500)
       this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
       this.addShakeClass(".trash-image")
     }
   }
 
+  clearMasterSpeech = () => {
+    this.setState({masterSpeech: ""})
+  }
+
   addShakeClass = selector => {
     document.querySelector(selector).classList.add('shake')
     setTimeout(() => document.querySelector(selector).classList.remove('shake'), 500)
+  }
+
+  addShakeClassMaster = selector => {
+    document.querySelector(selector).classList.add('shake-master')
+    setTimeout(() => document.querySelector(selector).classList.remove('shake-master'), 1500)
   }
 
   updateNewOrderState = () => {
@@ -282,13 +325,18 @@ class Game extends Component {
         </div>
         <div className="item" id="servebutton-holder"><button onClick={this.handleClickOfServeButton}>Serve Button</button></div>
         <div className="item" id="washer-holder"></div>
-        <div className="item" id="washerbutton-holder"><button>Wash Button</button></div>
+        <div className="item" id="washerbutton-holder"><button id="wash-button">Wash Button</button></div>
         <div className="item" id="tips-holder"><Tips tips={this.state.tips}/></div>
         <div className="item" id="tipsname-holder">Tips</div>
         <div className="item" id="clock-holder"><Clock clock={this.state.clock}/></div>
         <div className="item" id="clockname-holder">Clock</div>
         <div className="item" id="ingredients-holder">{ingredientCards}</div>
         <div className="item" id="ingredientsname-holder">List of ingredients</div>
+        <div className="item" id="masterchef-holder">
+          <Master
+            masterSpeech={this.state.masterSpeech}
+          />
+        </div>
         <div className="item" id="cookspace-holder"></div>
         <div className="item" id="cookspacename-holder">Cook space</div>
         <div className="item" id="tools-holder">{toolCards}</div>

@@ -83,7 +83,7 @@
 #game-container {
   display: grid;
   grid-template-columns: 14% 14% 14% 16% 14% 14% 14%;
-  grid-template-rows: 160px 30px 30px 480px auto;
+  grid-template-rows: 160px 30px 30px 60px 30px 390px auto;
 }
 
 #avatar-holder {
@@ -245,7 +245,7 @@
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 4;
-  grid-row-end: 5;
+  grid-row-end: 7;
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -267,8 +267,8 @@
   background-color: lightblue;
   grid-column-start: 3;
   grid-column-end: 6;
-  grid-row-start: 4;
-  grid-row-end: 5;
+  grid-row-start: 6;
+  grid-row-end: 7;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -278,8 +278,8 @@
   background-color: yellow;
   grid-column-start: 3;
   grid-column-end: 6;
-  grid-row-start: 3;
-  grid-row-end: 4;
+  grid-row-start: 5;
+  grid-row-end: 6;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -290,7 +290,7 @@
   grid-column-start: 6;
   grid-column-end: 8;
   grid-row-start: 4;
-  grid-row-end: 5;
+  grid-row-end: 7;
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -312,10 +312,38 @@
   background-color: darkgreen;
   grid-column-start: 1;
   grid-column-end: 8;
-  grid-row-start: 5;
+  grid-row-start: 7;
   grid-row: last-line;
   display: flex;
   justify-content: center;
+
+}
+
+#masterchef-holder {
+  background-color: lightgreen;
+  grid-column-start: 3;
+  grid-column-end: 6;
+  grid-row-start: 3;
+  grid-row-end: 5;
+  display: grid;
+  grid-template-columns: 30% 2% 68%;
+}
+
+#master-image {
+  background-color: white;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#master-gap {
+  background-color: white;
+}
+
+#master-speech {
+  background-color: white;
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -324,4 +352,98 @@
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
+}
+
+.shake-master {
+  animation: bounce 1.5s infinite alternate;
+  -webkit-animation: bounce 1.5s infinite alternate;
+}
+@keyframes bounce {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-15px);
+  }
+}
+@-webkit-keyframes bounce {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-15px);
+  }
+}
+
+#endgame-content {
+  display: grid;
+  grid-template-columns: 30% 3% 67%;
+  grid-template-rows: 160px 20px auto;
+}
+
+#endgame-useravatar {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  overflow: auto;
+}
+
+#endgame-gap1 {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+#endgame-userstats {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+  text-align: left;
+}
+
+#endgame-gap2 {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+#endgame-master {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 3;
+  grid-row-end: last-line;
+  display: grid;
+  grid-template-columns: 35% 2% 63%;
+}
+
+#endgame-master-image {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#endgame-master-speech {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
