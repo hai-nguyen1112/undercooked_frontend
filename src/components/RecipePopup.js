@@ -4,6 +4,9 @@ import {withRouter, Link} from 'react-router-dom'
 
 const RecipePopup = props => {
   let instructionCards = props.level.recipes.map(recipe => <img key={recipe.id} className="instruction" alt="instruction" src={recipe.instruction}/>)
+  if (props.level.id !== 1) {
+    instructionCards.unshift(<img key="instruction" className="instruction" alt="instruction" src="https://i.ibb.co/jb36yyC/instruction-plate.png"/>)
+  }
   return (
     <Popup trigger={<img className="level_logo" alt="level_logo" src={props.level.logo}/>} modal>
     {close => (

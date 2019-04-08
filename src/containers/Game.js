@@ -129,6 +129,10 @@ class Game extends Component {
       items = this.state.tools.filter(item => item.name !== draggedItem.name)
       this.setState({tools: items})
       setTimeout(() => {return this.updateToolsState(draggedItem, items)}, 500)
+    } else if (draggedItem.kind === 'dirty_tool') {
+      items = this.state.tools.filter(item => item.name !== draggedItem.name)
+      this.setState({tools: items})
+      setTimeout(() => {return this.updateToolsState(draggedItem, items)}, 500)
     }
   }
 
@@ -148,7 +152,7 @@ class Game extends Component {
     let serveGroup = this.state.serveGroup
     let draggedItem = JSON.parse(JSON.stringify(this.state.draggedItem))
     let copyOfCookedDish
-    if (this.state.draggedItem.kind !== 'user' && this.state.draggedItem.kind !== 'level' && this.state.draggedItem.kind !== 'order') {
+    if (this.state.draggedItem.kind !== 'user' && this.state.draggedItem.kind !== 'level' && this.state.draggedItem.kind !== 'order' && this.state.draggedItem.kind !== 'dirty_tool' && this.state.draggedItem.kind !== 'broken_tool') {
       if (isEmpty(serveGroup)) {
         if (this.state.draggedItem.kind === 'tool') {
           draggedItem.kind = 'serve_tool'
@@ -258,6 +262,13 @@ class Game extends Component {
       this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
       this.addShakeClass(".trash-image")
     }
+    if (this.state.draggedItem.kind === 'dirty_tool') {
+      this.addShakeClassMaster('.master-avatar')
+      this.setState({masterSpeech: "Please don't throw usable tools away."})
+      setTimeout(this.clearMasterSpeech, 1500)
+      this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+      this.addShakeClass(".trash-image")
+    }
   }
 
   clearMasterSpeech = () => {
@@ -352,7 +363,7 @@ class Game extends Component {
         <div className="item" id="clock-holder"><Clock clock={this.state.clock}/></div>
         <div className="item" id="clockname-holder">Clock</div>
         <div className="item" id="ingredients-holder">{ingredientCards}</div>
-        <div className="item" id="ingredientsname-holder">List of ingredients</div>
+        <div className="item" id="ingredientsname-holder">Fridge</div>
         <div className="item" id="masterchef-holder">
           <Master
             masterSpeech={this.state.masterSpeech}
@@ -361,7 +372,7 @@ class Game extends Component {
         <div className="item" id="cookspace-holder"></div>
         <div className="item" id="cookspacename-holder">Cook space</div>
         <div className="item" id="tools-holder">{toolCards}</div>
-        <div className="item" id="toolsname-holder">List of tools</div>
+        <div className="item" id="toolsname-holder">Cabinet</div>
         <div className="item" id="controlpanel-holder">
           <Link to="/profile"><button>Quit Game</button></Link>
           <button onClick={this.logout}>Logout</button>
