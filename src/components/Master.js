@@ -1,11 +1,12 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom'
+import {Image} from 'semantic-ui-react'
 
 const Master = props => {
   return (
     <>
       <div className="item" id="master-image">
-        <img
+        <Image
           alt=""
           className="master-avatar"
           src="https://i.ibb.co/2FkSrQx/male-cook.png"

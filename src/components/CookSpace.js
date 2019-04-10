@@ -1,11 +1,12 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom'
 import {isEmpty} from 'lodash'
+import {Image} from 'semantic-ui-react'
 
 const CookSpace = props => {
   let cookItemCards = props.cookGroup.map(cookItem => <div className="cookspace-cell">
                                                         <div className="cookspace-cell-inner">
-                                                          <img
+                                                          <Image
                                                             key={cookItem.name}
                                                             alt={cookItem.name}
                                                             src={cookItem.image}

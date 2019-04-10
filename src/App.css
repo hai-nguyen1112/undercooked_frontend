@@ -138,7 +138,7 @@
 #game-container {
   display: grid;
   grid-template-columns: 2% 14% 14% 13% 14% 13% 14% 14% 2%;
-  grid-template-rows: 28px 160px 30px 30px 60px 30px 182px 30px 40px auto;
+  grid-template-rows: 28px 160px 50px 50px 60px 30px 182px 50px auto;
 }
 
 #avatar-holder {
@@ -484,7 +484,7 @@
 #controlpanel-holder {
   grid-column-start: 2;
   grid-column-end: 9;
-  grid-row-start: 8;
+  grid-row-start: 9;
   grid-row: last-line;
   display: flex;
   justify-content: center;
@@ -507,7 +507,7 @@
   height: 100%;
   width: 80%;
   display: grid;
-  grid-template-columns: 30% 2% 68%;
+  grid-template-columns: 24% 1% 75%;
 }
 
 #master-image {

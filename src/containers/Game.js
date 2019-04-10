@@ -13,6 +13,7 @@ import RecipeReminderPopup from '../components/RecipeReminderPopup'
 import Master from '../components/Master'
 import Wash from '../components/Wash'
 import CookSpace from '../components/CookSpace'
+import {Image, Button, Icon} from 'semantic-ui-react'
 var clockCountdownInterval
 // var _ = require('underscore')
 
@@ -648,22 +649,32 @@ class Game extends Component {
           user={this.props.user}
           level={this.props.level}
         />
-        <div className="item" id="avatar-holder"><img
+      <div className="item" id="avatar-holder"><Image
                                                     draggable={true}
                                                     onDragStart={() => this.handleUpdateDraggedItemState(this.props.user)}
                                                     id="game-avatar"
                                                     alt="avatar"
-                                                    style={{height: "100%", borderRadius: "6px", border: "2px solid"}}
+                                                    style={{height: "100%", borderRadius: "6px", border: "2px solid lightblue"}}
                                                     src={this.props.user.avatar}
                                                   />
         </div>
-        <div className="item" id="playername-holder">Chef: {this.props.user.username.charAt(0).toUpperCase() + this.props.user.username.slice(1)}</div>
+        <div className="item" id="playername-holder">
+          <Button icon inverted color='orange' style={{width: "110px"}} labelPosition='left' id="playername-holder-button">
+            <Icon name='user'/>
+            {this.props.user.username.charAt(0).toUpperCase() + this.props.user.username.slice(1)}
+          </Button>
+        </div>
         <div className="item" id="orders-holder">
           <div id="orders-holder-inner" onClick={this.updatePopupRecipeOpenState}>
             <ImageOrder order={this.state.newOrder} handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}/>
           </div>
         </div>
-        <div className="item" id="ordername-holder">New Order</div>
+        <div className="item" id="ordername-holder">
+          <Button icon inverted color='violet' style={{width: "110px"}} labelPosition='left'>
+            <Icon name='bell'/>
+            Order
+          </Button>
+        </div>
         <div className="item" id="trash-holder">
           <div id="trash-holder-inner"
             onDragOver={e => {e.preventDefault(); e.stopPropagation()}}
@@ -674,7 +685,12 @@ class Game extends Component {
             />
           </div>
         </div>
-        <div className="item" id="trashname-holder">Trash Can</div>
+        <div className="item" id="trashname-holder">
+          <Button icon inverted color='green' style={{width: "110px"}} labelPosition='left'>
+            <Icon name='trash'/>
+            Trash
+          </Button>
+        </div>
         <div className="item" id="serve-holder">
           <div id="serve-holder-inner"
             onDragOver={e => {e.preventDefault(); e.stopPropagation()}}
@@ -686,7 +702,12 @@ class Game extends Component {
             />
           </div>
         </div>
-        <div className="item" id="servebutton-holder"><button onClick={this.handleClickOfServeButton}>Serve Button</button></div>
+        <div className="item" id="servebutton-holder">
+          <Button icon inverted color='red' style={{width: "110px"}} labelPosition='left' onClick={this.handleClickOfServeButton}>
+            <Icon name='utensils'/>
+            Serve
+          </Button>
+        </div>
         <div className="item" id="washer-holder">
           <div id="washer-holder-inner"
             onDragOver={e => {e.preventDefault(); e.stopPropagation()}}
@@ -703,9 +724,17 @@ class Game extends Component {
           {
             !washing
             ?
-            <button id="wash-button" style={{width: "100px"}} onClick={this.handleClickOfWashButton}>Wash Button</button>
+            <Button icon inverted color='blue' style={{width: "110px"}} labelPosition='left' id="wash-button" onClick={this.handleClickOfWashButton}>
+              <Icon name='tint'/>
+              Wash
+            </Button>
+            // <button id="wash-button" style={{width: "100px"}} onClick={this.handleClickOfWashButton}>Wash Button</button>
             :
-            <button id="wash-button" style={{width: "100px"}} onClick={this.handleClickOfDoneWashing}>{this.state.timeWashed}</button>
+            <Button icon inverted color='blue' style={{width: "110px"}} labelPosition='left' id="wash-button" onClick={this.handleClickOfDoneWashing}>
+              <Icon name='clock'/>
+              {this.state.timeWashed}
+            </Button>
+            // <button id="wash-button" style={{width: "100px"}} onClick={this.handleClickOfDoneWashing}>{this.state.timeWashed}</button>
           }
         </div>
         <div className="item" id="tips-holder">
@@ -713,15 +742,30 @@ class Game extends Component {
             <Tips tips={this.state.tips}/>
           </div>
         </div>
-        <div className="item" id="tipsname-holder">Tips</div>
+        <div className="item" id="tipsname-holder">
+          <Button icon inverted color='pink' style={{width: "110px"}} labelPosition='left'>
+            <Icon name='thumbs up'/>
+            Tips
+          </Button>
+        </div>
         <div className="item" id="clock-holder">
           <div id="clock-holder-inner">
             <Clock clock={this.state.clock}/>
           </div>
         </div>
-        <div className="item" id="clockname-holder">Clock</div>
+        <div className="item" id="clockname-holder">
+          <Button icon inverted color='olive' style={{width: "110px"}} labelPosition='left'>
+            <Icon name='hourglass'/>
+            Clock
+          </Button>
+        </div>
         <div className="item" id="ingredients-holder">{ingredientCards}</div>
-        <div className="item" id="ingredientsname-holder">Fridge</div>
+        <div className="item" id="ingredientsname-holder">
+          <Button icon inverted color='blue' style={{width: "110px"}} labelPosition='left'>
+            <Icon name='calculator'/>
+            Fridge
+          </Button>
+        </div>
         <div className="item" id="masterchef-holder">
           <div id="masterchef-holder-inner">
             <Master
@@ -746,17 +790,38 @@ class Game extends Component {
           {
             !cooking
             ?
-            <button id="cook-button-button" style={{width: "100px"}} onClick={this.handleClickOfCookButton}>Cook Button</button>
+            <Button icon inverted color='purple' style={{width: "110px"}} labelPosition='left' id="cook-button-button" onClick={this.handleClickOfCookButton}>
+              <Icon name='power off'/>
+              Cook
+            </Button>
+            // <button id="cook-button-button" style={{width: "100px"}} onClick={this.handleClickOfCookButton}>Cook Button</button>
             :
-            <button id="cook-button-button" style={{width: "100px"}} onClick={this.handleClickOfDoneCooking}>{this.state.timeCooked}</button>
+            <Button icon inverted color='purple' style={{width: "110px"}} labelPosition='left' id="cook-button-button" onClick={this.handleClickOfDoneCooking}>
+              <Icon name='clock'/>
+              {this.state.timeCooked}
+            </Button>
+            // <button id="cook-button-button" style={{width: "100px"}} onClick={this.handleClickOfDoneCooking}>{this.state.timeCooked}</button>
           }
         </div>
-        <div className="item" id="cookspacename-holder">Cook Space</div>
+        <div className="item" id="cookspacename-holder"></div>
         <div className="item" id="tools-holder">{toolCards}</div>
-        <div className="item" id="toolsname-holder">Cabinet</div>
+        <div className="item" id="toolsname-holder">
+          <Button icon inverted color='orange' style={{width: "110px"}} labelPosition='left'>
+            <Icon name='columns'/>
+            Cabinet
+          </Button>
+        </div>
         <div className="item" id="controlpanel-holder">
-          <Link to="/profile"><button>Quit Game</button></Link>
-          <button onClick={this.logout}>Logout</button>
+          <Link to="/profile">
+            <Button icon inverted color='blue' style={{width: "110px"}} labelPosition='left'>
+              <Icon name='external alternate'/>
+              Quit
+            </Button>
+          </Link>
+            <Button icon inverted color='orange' style={{width: "110px"}} labelPosition='left' onClick={this.logout}>
+              <Icon name='log out'/>
+              Logout
+            </Button>
         </div>
       </div>
     )
