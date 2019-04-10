@@ -471,12 +471,10 @@ class Game extends Component {
   }
 
   handleClickOfWashButton = () => {
-    if (this.state.washing === false) {
-      if (!isEmpty(this.state.itemToWash)) {
+    if (this.state.washing === false && this.state.itemToWash.kind === 'washing_tool') {
         this.startWashTimer()
         this.setState({washing: true})
         this.addBlinkClass('.wash-image')
-      }
     }
   }
 
@@ -497,10 +495,13 @@ class Game extends Component {
   }
 
   handleClickOfCookButton = () => {
-    if (!isEmpty(this.state.cookGroup)) {
-      this.startCookTimer()
-      this.setState({cooking: true})
-      this.setState({cookSpaceAvailable: false})
+    console.log(this.state.cookGroup)
+    if (this.state.cooking === false && this.state.cookGroup[0].kind !== 'wellDone') {
+      if (!isEmpty(this.state.cookGroup)) {
+        this.startCookTimer()
+        this.setState({cooking: true})
+        this.setState({cookSpaceAvailable: false})
+      }
     }
   }
 
@@ -536,51 +537,53 @@ class Game extends Component {
 
   handleClickOfDoneCooking = () => {
     let desiredCookGroup = []
-    this.state.newOrder.ingredients.forEach(ingredient => {
-      desiredCookGroup.push(ingredient)
-    })
-    this.state.newOrder.tools.forEach(tool => {
-      desiredCookGroup.push(tool)
-    })
-    desiredCookGroup.sort((a, b) => a.name.localeCompare(b.name))
-    let cookGroup = JSON.parse(JSON.stringify(this.state.cookGroup))
-    cookGroup.sort((a, b) => a.name.localeCompare(b.name))
-    if (this.state.timeCooked === this.state.newOrder.cooktime) {
-      if (cookGroup.length === desiredCookGroup.length) {
-        let counter = 0
-        for (var i=0; i<cookGroup.length; i++) {
-          if (cookGroup[i].name === desiredCookGroup[i].name) {
-            counter = counter + 1
+    if (this.state.cooking === true) {
+      this.state.newOrder.ingredients.forEach(ingredient => {
+        desiredCookGroup.push(ingredient)
+      })
+      this.state.newOrder.tools.forEach(tool => {
+        desiredCookGroup.push(tool)
+      })
+      desiredCookGroup.sort((a, b) => a.name.localeCompare(b.name))
+      let cookGroup = JSON.parse(JSON.stringify(this.state.cookGroup))
+      cookGroup.sort((a, b) => a.name.localeCompare(b.name))
+      if (this.state.timeCooked === this.state.newOrder.cooktime) {
+        if (cookGroup.length === desiredCookGroup.length) {
+          let counter = 0
+          for (var i=0; i<cookGroup.length; i++) {
+            if (cookGroup[i].name === desiredCookGroup[i].name) {
+              counter = counter + 1
+            }
           }
-        }
-        if (cookGroup.length === counter) {
-          let wellDoneDish = JSON.parse(JSON.stringify(this.state.newOrder))
-          wellDoneDish["kind"] = 'wellDone'
-          wellDoneDish["image"] = this.state.newOrder.image_without_plate
-          this.setState({cookGroup: [wellDoneDish]})
+          if (cookGroup.length === counter) {
+            let wellDoneDish = JSON.parse(JSON.stringify(this.state.newOrder))
+            wellDoneDish["kind"] = 'wellDone'
+            wellDoneDish["image"] = this.state.newOrder.image_without_plate
+            this.setState({cookGroup: [wellDoneDish]})
+          } else {
+            this.setState({cookGroup: [this.state.ruinedDish]})
+            this.addShakeClassMaster('.master-avatar')
+            this.setState({masterSpeech: "Oh no, you cooked a mess. Toss it."})
+            setTimeout(this.clearMasterSpeech, 1700)
+          }
         } else {
           this.setState({cookGroup: [this.state.ruinedDish]})
           this.addShakeClassMaster('.master-avatar')
           this.setState({masterSpeech: "Oh no, you cooked a mess. Toss it."})
           setTimeout(this.clearMasterSpeech, 1700)
         }
-      } else {
-        this.setState({cookGroup: [this.state.ruinedDish]})
+      } else if (this.state.timeCooked > this.state.newOrder.cooktime) {
+        this.setState({cookGroup: [this.state.burnedDish]})
         this.addShakeClassMaster('.master-avatar')
-        this.setState({masterSpeech: "Oh no, you cooked a mess. Toss it."})
+        this.setState({masterSpeech: "Oh no, you overcooked it. Throw the burnt thing away."})
         setTimeout(this.clearMasterSpeech, 1700)
       }
-    } else if (this.state.timeCooked > this.state.newOrder.cooktime) {
-      this.setState({cookGroup: [this.state.burnedDish]})
-      this.addShakeClassMaster('.master-avatar')
-      this.setState({masterSpeech: "Oh no, you overcooked it. Throw the burnt thing away."})
-      setTimeout(this.clearMasterSpeech, 1700)
-    }
-    if (this.state.timeCooked >= this.state.newOrder.cooktime) {
-      clearInterval(this.interval1)
-      this.setState({cooking: false})
-      this.setState({timeCooked: 0})
-      document.getElementById("cook-button-button").disabled = true
+      if (this.state.timeCooked >= this.state.newOrder.cooktime) {
+        clearInterval(this.interval1)
+        this.setState({cooking: false})
+        this.setState({timeCooked: 0})
+        document.getElementById("cook-button-button").disabled = true
+      }
     }
   }
 
@@ -726,6 +729,7 @@ class Game extends Component {
           <div className="item" id="cookspace-id"
             onDragOver={e => {e.preventDefault(); e.stopPropagation()}}
             onDrop={e => {e.preventDefault(); this.handleDropOnCookSpace()}}
+            onClick={cooking ? this.handleClickOfDoneCooking : this.handleClickOfCookButton}
           >
             <CookSpace
               handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}
