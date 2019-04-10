@@ -299,6 +299,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 60px;
 }
 
 #tipsname-holder {
@@ -329,6 +330,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 60px;
 }
 
 #clockname-holder {
@@ -523,6 +525,8 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  color: white;
+  font-size: 20px;
 }
 
 .shake {
