@@ -471,10 +471,12 @@ class Game extends Component {
   }
 
   handleClickOfWashButton = () => {
-    if (this.state.washing === false && this.state.itemToWash.kind === 'washing_tool') {
-        this.startWashTimer()
-        this.setState({washing: true})
-        this.addBlinkClass('.wash-image')
+    if (!isEmpty(this.state.itemToWash)) {
+      if (this.state.washing === false && this.state.itemToWash.kind === 'washing_tool') {
+          this.startWashTimer()
+          this.setState({washing: true})
+          this.addBlinkClass('.wash-image')
+      }
     }
   }
 
@@ -495,9 +497,12 @@ class Game extends Component {
   }
 
   handleClickOfCookButton = () => {
-    console.log(this.state.cookGroup)
-    if (this.state.cooking === false && this.state.cookGroup[0].kind !== 'wellDone') {
-      if (!isEmpty(this.state.cookGroup)) {
+    if (!isEmpty(this.state.cookGroup)) {
+      if (this.state.cooking === false && this.state.cookGroup[0].kind === 'being_cooked_ingredient') {
+          this.startCookTimer()
+          this.setState({cooking: true})
+          this.setState({cookSpaceAvailable: false})
+      } else if (this.state.cooking === false && this.state.cookGroup[0].kind === 'being_used_tool') {
         this.startCookTimer()
         this.setState({cooking: true})
         this.setState({cookSpaceAvailable: false})
