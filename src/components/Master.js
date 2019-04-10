@@ -10,6 +10,7 @@ const Master = props => {
           className="master-avatar"
           src="https://i.ibb.co/2FkSrQx/male-cook.png"
           style={{width: "85px", height: "85px", borderRadius: "4px"}}
+          onClick={props.handleClickOnMaster}
         />
       </div>
       <div className="item" id="master-gap"></div>

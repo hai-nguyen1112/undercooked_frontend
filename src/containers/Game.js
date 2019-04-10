@@ -11,6 +11,8 @@ import Clock from '../components/Clock'
 import EndGamePopUp from '../components/EndGamePopUp'
 import RecipeReminderPopup from '../components/RecipeReminderPopup'
 import Master from '../components/Master'
+import Wash from '../components/Wash'
+import CookSpace from '../components/CookSpace'
 var clockCountdownInterval
 // var _ = require('underscore')
 
@@ -28,7 +30,16 @@ class Game extends Component {
       clock: props.level.clock,
       popupOpen: false,
       popupRecipeOpen: false,
-      masterSpeech: 'Welcome to Overcooked kitchen!'
+      masterSpeech: 'Welcome to Overcooked kitchen!',
+      itemToWash: {},
+      timeWashed: 0,
+      washing: false,
+      cookGroup: [],
+      timeCooked: 0,
+      cooking: false,
+      burnedDish: {image: props.level.burned_dish, kind: 'burntItem', name: 'burntItem'},
+      ruinedDish: {image: props.level.ruined_dish, kind: 'burntItem', name: 'burntItem'},
+      cookSpaceAvailable: true
     }
   }
 
@@ -39,23 +50,36 @@ class Game extends Component {
 
   componentDidMount() {
     let ingredients = []
-    this.props.level.recipes.forEach(recipe => {
-      recipe.ingredients.forEach(ingredient => {
+    let copyOfIngredient
+    if (this.props.level.id === 1 || this.props.level.id === 2) {
+      this.props.level.recipes.forEach(recipe => {
+        recipe.ingredients.forEach(ingredient => {
           ingredients.push(ingredient)
+        })
       })
-    })
+    } else {
+      this.props.level.recipes.forEach(recipe => {
+        recipe.ingredients.forEach(ingredient => {
+          copyOfIngredient = JSON.parse(JSON.stringify(ingredient))
+          copyOfIngredient["kind"] = 'raw_ingredient'
+          ingredients.push(copyOfIngredient)
+        })
+      })
+    }
     this.setState({ingredients: this.unique(ingredients)})
 
     let tools = []
+    let copyOfTool
     if (this.props.level.id === 1) {
       tools.push(this.props.level.plates.find(plate => plate.name === "clean_plate"))
-      document.getElementById('wash-button').disabled = true
     } else {
       tools.push(this.props.level.plates.find(plate => plate.name === "dirty_plate"))
     }
     this.props.level.recipes.forEach(recipe => {
       recipe.tools.forEach(tool => {
-          tools.push(tool)
+        copyOfTool = JSON.parse(JSON.stringify(tool))
+        copyOfTool["kind"] = 'cooking_tool'
+        tools.push(copyOfTool)
       })
     })
     this.setState({tools: this.unique(tools)})
@@ -72,7 +96,7 @@ class Game extends Component {
     clockCountdownInterval = setInterval(this.handleCountdownClockState, 1000)
 
     this.addShakeClassMaster('.master-avatar')
-    setTimeout(this.clearMasterSpeech, 1500)
+    setTimeout(this.clearMasterSpeech, 1700)
   }
 
   handleCountdownClockState = () => {
@@ -133,6 +157,14 @@ class Game extends Component {
       items = this.state.tools.filter(item => item.name !== draggedItem.name)
       this.setState({tools: items})
       setTimeout(() => {return this.updateToolsState(draggedItem, items)}, 500)
+    } else if (draggedItem.kind === 'raw_ingredient') {
+      items = this.state.ingredients.filter(item => item.name !== draggedItem.name)
+      this.setState({ingredients: items})
+      setTimeout(() => {return this.updateIngredientsState(draggedItem, items)}, 500)
+    } else if (draggedItem.kind === 'cooking_tool') {
+      items = this.state.tools.filter(item => item.name !== draggedItem.name)
+      this.setState({tools: items})
+      setTimeout(() => {return this.updateToolsState(draggedItem, items)}, 500)
     }
   }
 
@@ -149,21 +181,34 @@ class Game extends Component {
   handleDropOfPlateAndCookedDishOnServe = () => {
     let cookedDish
     let dishName
-    let serveGroup = this.state.serveGroup
+    let serveGroup = JSON.parse(JSON.stringify(this.state.serveGroup))
     let draggedItem = JSON.parse(JSON.stringify(this.state.draggedItem))
     let copyOfCookedDish
-    if (this.state.draggedItem.kind !== 'user' && this.state.draggedItem.kind !== 'level' && this.state.draggedItem.kind !== 'order' && this.state.draggedItem.kind !== 'dirty_tool' && this.state.draggedItem.kind !== 'broken_tool') {
+    if (this.state.draggedItem.kind !== 'user' && this.state.draggedItem.kind !== 'level' && this.state.draggedItem.kind !== 'order' && this.state.draggedItem.kind !== 'dirty_tool' && this.state.draggedItem.kind !== 'broken_tool' && this.state.draggedItem.kind !== 'washing_tool') {
       if (isEmpty(serveGroup)) {
         if (this.state.draggedItem.kind === 'tool') {
           draggedItem.kind = 'serve_tool'
+          serveGroup.push(draggedItem)
+          this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
         } else if (this.state.draggedItem.kind === 'ingredient') {
           draggedItem.kind = 'serve_ingredient'
+          serveGroup.push(draggedItem)
+          this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+        } else if (this.state.draggedItem.kind === 'washed_tool') {
+          draggedItem.kind = 'serve_tool'
+          this.setState({itemToWash: {}})
+          document.getElementById("wash-button").disabled = false
+          serveGroup.push(draggedItem)
+        } else if (this.state.draggedItem.kind === 'wellDone') {
+          draggedItem.kind = 'serve_ingredient'
+          serveGroup.push(draggedItem)
+          this.setState({cookGroup: []})
+          this.setState({cooking: false})
+          this.setState({cookSpaceAvailable: true})
+          document.getElementById("cook-button-button").disabled = false
         }
-        serveGroup.push(draggedItem)
-        console.log(serveGroup)
-        this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
       } else if (serveGroup.length === 1 && serveGroup[0].kind !== 'recipe') {
-        if (serveGroup[0].kind !== this.state.draggedItem.kind) {
+        if (serveGroup[0].kind === 'serve_ingredient' && this.state.draggedItem.kind === 'tool') {
           serveGroup.push(this.state.draggedItem)
           dishName = serveGroup.filter(item => item.name !== 'clean_plate')[0].name
           cookedDish = this.state.recipes.filter(recipe => recipe.name === dishName)[0]
@@ -172,6 +217,44 @@ class Game extends Component {
           serveGroup = []
           serveGroup.push(copyOfCookedDish)
           this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+          console.log("copy cooked dish:", copyOfCookedDish)
+          console.log("cooked dish:", cookedDish)
+        } else if (serveGroup[0].kind === 'serve_tool' && this.state.draggedItem.kind === 'ingredient') {
+          serveGroup.push(this.state.draggedItem)
+          dishName = serveGroup.filter(item => item.name !== 'clean_plate')[0].name
+          cookedDish = this.state.recipes.filter(recipe => recipe.name === dishName)[0]
+          copyOfCookedDish = JSON.parse(JSON.stringify(cookedDish))
+          copyOfCookedDish.kind = 'serve_recipe'
+          serveGroup = []
+          serveGroup.push(copyOfCookedDish)
+          this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+          console.log("copy cooked dish:", copyOfCookedDish)
+          console.log("cooked dish:", cookedDish)
+        } else if (serveGroup[0].kind === 'serve_ingredient' && this.state.draggedItem.kind === 'washed_tool') {
+          serveGroup.push(this.state.draggedItem)
+          dishName = serveGroup.filter(item => item.name !== 'clean_plate')[0].name
+          cookedDish = this.state.recipes.filter(recipe => recipe.name === dishName)[0]
+          copyOfCookedDish = JSON.parse(JSON.stringify(cookedDish))
+          copyOfCookedDish.kind = 'serve_recipe'
+          serveGroup = []
+          serveGroup.push(copyOfCookedDish)
+          this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+          console.log("copy cooked dish:", copyOfCookedDish)
+          console.log("cooked dish:", cookedDish)
+          this.setState({itemToWash: {}})
+          document.getElementById("wash-button").disabled = false
+        } else if (serveGroup[0].kind === 'serve_tool' && this.state.draggedItem.kind === 'wellDone') {
+          serveGroup.push(this.state.draggedItem)
+          dishName = serveGroup.filter(item => item.name !== 'clean_plate')[0].name
+          cookedDish = this.state.recipes.filter(recipe => recipe.name === dishName)[0]
+          copyOfCookedDish = JSON.parse(JSON.stringify(cookedDish))
+          copyOfCookedDish.kind = 'serve_recipe'
+          serveGroup = []
+          serveGroup.push(copyOfCookedDish)
+          this.setState({cookGroup: []})
+          this.setState({cooking: false})
+          this.setState({cookSpaceAvailable: true})
+          document.getElementById("cook-button-button").disabled = false
           console.log("copy cooked dish:", copyOfCookedDish)
           console.log("cooked dish:", cookedDish)
         }
@@ -200,7 +283,7 @@ class Game extends Component {
         if (this.state.serveGroup[0].name === this.state.newOrder.name) {
           this.addShakeClassMaster('.master-avatar')
           this.setState({masterSpeech: "Great job."})
-          setTimeout(this.clearMasterSpeech, 1500)
+          setTimeout(this.clearMasterSpeech, 1700)
           this.setState({tips: this.state.tips + 10})
           this.addFadeOutClass('.serve-image')
           setTimeout(this.updateServeGroupState, 500)
@@ -208,30 +291,30 @@ class Game extends Component {
           setTimeout(this.clearNewOrderState, 500)
         } else {
           this.addShakeClassMaster('.master-avatar')
-          this.setState({masterSpeech: "You cooked the wrong dish. Please toss it."})
-          setTimeout(this.clearMasterSpeech, 1500)
+          this.setState({masterSpeech: "You cooked the wrong dish. Toss it."})
+          setTimeout(this.clearMasterSpeech, 1700)
         }
       } else {
         if (this.state.serveGroup[0].kind === 'serve_tool') {
           this.addShakeClassMaster('.master-avatar')
-          this.setState({masterSpeech: "You can't serve with an empty plate. Please put something on it."})
-          setTimeout(this.clearMasterSpeech, 1500)
+          this.setState({masterSpeech: "You can't serve an empty plate. Put something on it."})
+          setTimeout(this.clearMasterSpeech, 1700)
         } else if (this.state.serveGroup[0].kind === 'serve_ingredient') {
           if (this.state.serveGroup[0].name === this.state.newOrder.name) {
             this.addShakeClassMaster('.master-avatar')
-            this.setState({masterSpeech: "You can't serve without a plate. Please give it a plate."})
-            setTimeout(this.clearMasterSpeech, 1500)
+            this.setState({masterSpeech: "You can't serve without a plate. Give it a plate."})
+            setTimeout(this.clearMasterSpeech, 1700)
           } else {
             this.addShakeClassMaster('.master-avatar')
-            this.setState({masterSpeech: "You cooked the wrong dish. Please toss it."})
-            setTimeout(this.clearMasterSpeech, 1500)
+            this.setState({masterSpeech: "You cooked the wrong dish. Toss it."})
+            setTimeout(this.clearMasterSpeech, 1700)
           }
         }
       }
     } else {
       this.addShakeClassMaster('.master-avatar')
       this.setState({masterSpeech: "Hey, you have to cook a dish before serving."})
-      setTimeout(this.clearMasterSpeech, 1500)
+      setTimeout(this.clearMasterSpeech, 1700)
     }
   }
 
@@ -250,23 +333,89 @@ class Game extends Component {
     }
     if (this.state.draggedItem.kind === 'tool') {
       this.addShakeClassMaster('.master-avatar')
-      this.setState({masterSpeech: "Please don't throw usable tools away."})
-      setTimeout(this.clearMasterSpeech, 1500)
+      this.setState({masterSpeech: "Hey, don't throw usable tools away."})
+      setTimeout(this.clearMasterSpeech, 1700)
       this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
       this.addShakeClass(".trash-image")
     }
     if (this.state.draggedItem.kind === 'ingredient') {
       this.addShakeClassMaster('.master-avatar')
-      this.setState({masterSpeech: "Please don't throw fresh ingredients away."})
-      setTimeout(this.clearMasterSpeech, 1500)
+      this.setState({masterSpeech: "Hey, don't throw fresh ingredients away."})
+      setTimeout(this.clearMasterSpeech, 1700)
       this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
       this.addShakeClass(".trash-image")
     }
     if (this.state.draggedItem.kind === 'dirty_tool') {
       this.addShakeClassMaster('.master-avatar')
-      this.setState({masterSpeech: "Please don't throw usable tools away."})
-      setTimeout(this.clearMasterSpeech, 1500)
+      this.setState({masterSpeech: "Hey don't throw usable tools away."})
+      setTimeout(this.clearMasterSpeech, 1700)
       this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+      this.addShakeClass(".trash-image")
+    }
+    if (this.state.draggedItem.kind === 'broken_tool') {
+      this.setState({itemToWash: {}})
+      this.addShakeClass(".trash-image")
+      document.getElementById("wash-button").disabled = false
+    }
+    if (this.state.draggedItem.kind === 'washing_tool' && this.state.washing !== true) {
+      this.addShakeClassMaster('.master-avatar')
+      this.setState({masterSpeech: "Hey don't throw usable tools away."})
+      setTimeout(this.clearMasterSpeech, 1700)
+      this.setState({itemToWash: {}})
+      this.addShakeClass(".trash-image")
+      document.getElementById("wash-button").disabled = false
+    }
+    if (this.state.draggedItem.kind === 'washed_tool') {
+      this.addShakeClassMaster('.master-avatar')
+      this.setState({masterSpeech: "Hey don't throw usable tools away."})
+      setTimeout(this.clearMasterSpeech, 1700)
+      this.setState({itemToWash: {}})
+      this.addShakeClass(".trash-image")
+      document.getElementById("wash-button").disabled = false
+    }
+    if (this.state.draggedItem.kind === 'raw_ingredient') {
+      this.addShakeClassMaster('.master-avatar')
+      this.setState({masterSpeech: "Hey, don't throw fresh ingredients away."})
+      setTimeout(this.clearMasterSpeech, 1700)
+      this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+      this.addShakeClass(".trash-image")
+    }
+    if (this.state.draggedItem.kind === 'cooking_tool') {
+      this.addShakeClassMaster('.master-avatar')
+      this.setState({masterSpeech: "Hey, don't throw usable tools away."})
+      setTimeout(this.clearMasterSpeech, 1700)
+      this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+      this.addShakeClass(".trash-image")
+    }
+    if (this.state.draggedItem.kind === 'being_used_tool') {
+      this.addShakeClassMaster('.master-avatar')
+      this.setState({masterSpeech: "Hey, don't throw usable tools away."})
+      setTimeout(this.clearMasterSpeech, 1700)
+      this.setState({cookGroup: this.state.cookGroup.filter(item => item.name !== this.state.draggedItem.name)})
+      this.addShakeClass(".trash-image")
+    }
+    if (this.state.draggedItem.kind === 'being_cooked_ingredient') {
+      this.addShakeClassMaster('.master-avatar')
+      this.setState({masterSpeech: "Hey, don't throw fresh ingredients away."})
+      setTimeout(this.clearMasterSpeech, 1700)
+      this.setState({cookGroup: this.state.cookGroup.filter(item => item.name !== this.state.draggedItem.name)})
+      this.addShakeClass(".trash-image")
+    }
+    if (this.state.draggedItem.kind === 'burntItem') {
+      this.setState({cookGroup: []})
+      this.setState({cooking: false})
+      this.setState({cookSpaceAvailable: true})
+      document.getElementById("cook-button-button").disabled = false
+      this.addShakeClass(".trash-image")
+    }
+    if (this.state.draggedItem.kind === 'wellDone') {
+      this.addShakeClassMaster('.master-avatar')
+      this.setState({masterSpeech: "Hey, don't throw perfectly cooked dish away."})
+      setTimeout(this.clearMasterSpeech, 1700)
+      this.setState({cookGroup: []})
+      this.setState({cooking: false})
+      this.setState({cookSpaceAvailable: true})
+      document.getElementById("cook-button-button").disabled = false
       this.addShakeClass(".trash-image")
     }
   }
@@ -282,7 +431,7 @@ class Game extends Component {
 
   addShakeClassMaster = selector => {
     document.querySelector(selector).classList.add('shake-master')
-    setTimeout(() => document.querySelector(selector).classList.remove('shake-master'), 1500)
+    setTimeout(() => document.querySelector(selector).classList.remove('shake-master'), 2000)
   }
 
   updateNewOrderState = () => {
@@ -309,9 +458,174 @@ class Game extends Component {
     return newArray
   }
 
+  handleDropOnWasher = () => {
+    let copyOfItemToWash
+    if (isEmpty(this.state.itemToWash)) {
+      if (this.state.draggedItem.kind === 'dirty_tool') {
+        copyOfItemToWash = JSON.parse(JSON.stringify(this.state.draggedItem))
+        copyOfItemToWash["kind"] = 'washing_tool'
+        this.setState({itemToWash: copyOfItemToWash})
+        this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+      }
+    }
+  }
+
+  handleClickOfWashButton = () => {
+    if (this.state.washing === false) {
+      if (!isEmpty(this.state.itemToWash)) {
+        this.startWashTimer()
+        this.setState({washing: true})
+        this.addBlinkClass('.wash-image')
+      }
+    }
+  }
+
+  addBlinkClass = selector => {
+    document.querySelector(selector).classList.add('blink_me')
+  }
+
+  removeBlinkClass = selector => {
+    document.querySelector(selector).classList.remove('blink_me')
+  }
+
+  startWashTimer = () => {
+    this.interval = setInterval(this.updateWashTimer, 1000)
+  }
+
+  updateWashTimer = () => {
+    this.setState({timeWashed: this.state.timeWashed + 1})
+  }
+
+  handleClickOfCookButton = () => {
+    if (!isEmpty(this.state.cookGroup)) {
+      this.startCookTimer()
+      this.setState({cooking: true})
+      this.setState({cookSpaceAvailable: false})
+    }
+  }
+
+  startCookTimer = () => {
+    this.interval1 = setInterval(this.updateCookTimer, 1000)
+  }
+
+  updateCookTimer = () => {
+    this.setState({timeCooked: this.state.timeCooked + 1})
+  }
+
+
+  handleClickOfDoneWashing = () => {
+    let washedItem
+    if (this.state.washing === true) {
+      if (this.state.timeWashed === 3) {
+        washedItem = JSON.parse(JSON.stringify(this.props.level.plates.find(plate => plate.name === "clean_plate")))
+        washedItem["kind"] = 'washed_tool'
+        this.setState({itemToWash: washedItem})
+      } else {
+        this.setState({itemToWash: this.props.level.plates.find(plate => plate.name === "broken_plate")})
+        this.addShakeClassMaster('.master-avatar')
+        this.setState({masterSpeech: "Oh no, you broke the plate. Toss it."})
+        setTimeout(this.clearMasterSpeech, 1700)
+      }
+      this.removeBlinkClass('.wash-image')
+      clearInterval(this.interval)
+      this.setState({washing: false})
+      this.setState({timeWashed: 0})
+      document.getElementById("wash-button").disabled = true
+    }
+  }
+
+  handleClickOfDoneCooking = () => {
+    let desiredCookGroup = []
+    this.state.newOrder.ingredients.forEach(ingredient => {
+      desiredCookGroup.push(ingredient)
+    })
+    this.state.newOrder.tools.forEach(tool => {
+      desiredCookGroup.push(tool)
+    })
+    desiredCookGroup.sort((a, b) => a.name.localeCompare(b.name))
+    let cookGroup = JSON.parse(JSON.stringify(this.state.cookGroup))
+    cookGroup.sort((a, b) => a.name.localeCompare(b.name))
+    if (this.state.timeCooked === this.state.newOrder.cooktime) {
+      if (cookGroup.length === desiredCookGroup.length) {
+        let counter = 0
+        for (var i=0; i<cookGroup.length; i++) {
+          if (cookGroup[i].name === desiredCookGroup[i].name) {
+            counter = counter + 1
+          }
+        }
+        if (cookGroup.length === counter) {
+          let wellDoneDish = JSON.parse(JSON.stringify(this.state.newOrder))
+          wellDoneDish["kind"] = 'wellDone'
+          wellDoneDish["image"] = this.state.newOrder.image_without_plate
+          this.setState({cookGroup: [wellDoneDish]})
+        } else {
+          this.setState({cookGroup: [this.state.ruinedDish]})
+          this.addShakeClassMaster('.master-avatar')
+          this.setState({masterSpeech: "Oh no, you cooked a mess. Toss it."})
+          setTimeout(this.clearMasterSpeech, 1700)
+        }
+      } else {
+        this.setState({cookGroup: [this.state.ruinedDish]})
+        this.addShakeClassMaster('.master-avatar')
+        this.setState({masterSpeech: "Oh no, you cooked a mess. Toss it."})
+        setTimeout(this.clearMasterSpeech, 1700)
+      }
+    } else if (this.state.timeCooked > this.state.newOrder.cooktime) {
+      this.setState({cookGroup: [this.state.burnedDish]})
+      this.addShakeClassMaster('.master-avatar')
+      this.setState({masterSpeech: "Oh no, you overcooked it. Throw the burnt thing away."})
+      setTimeout(this.clearMasterSpeech, 1700)
+    }
+    if (this.state.timeCooked >= this.state.newOrder.cooktime) {
+      clearInterval(this.interval1)
+      this.setState({cooking: false})
+      this.setState({timeCooked: 0})
+      document.getElementById("cook-button-button").disabled = true
+    }
+  }
+
+  handleDropOnCookSpace = () => {
+    let itemGroup
+    let cookGroup
+    let item
+    if (this.state.cookSpaceAvailable === true) {
+      if (this.state.draggedItem.kind === 'raw_ingredient' || this.state.draggedItem.kind === 'cooking_tool') {
+        itemGroup = JSON.parse(JSON.stringify(this.state.cookGroup))
+        item = JSON.parse(JSON.stringify(this.state.draggedItem))
+        if (item.kind === 'raw_ingredient') {
+          item["kind"] = 'being_cooked_ingredient'
+        } else if (item.kind === 'cooking_tool') {
+          item["kind"] = 'being_used_tool'
+        }
+        itemGroup.push(item)
+        cookGroup = this.unique(itemGroup)
+        this.setState({cookGroup: cookGroup})
+        this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
+      }
+    }
+  }
+
+  handleClickOnMaster = () => {
+    this.addShakeClassMaster('.master-avatar')
+    this.setState({masterSpeech: "Focus on cooking please. We don't have time to chat now."})
+    setTimeout(this.clearMasterSpeech, 1700)
+  }
+
   render() {
-    let ingredientCards = this.state.ingredients.map(ingredient => <ImageIngredient key={ingredient.name} ingredient={ingredient} handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}/>)
-    let toolCards = this.state.tools.map(tool => <ImageTool key={tool.name} tool={tool} handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}/>)
+    let ingredients = JSON.parse(JSON.stringify(this.state.ingredients))
+    let counter = 12 - ingredients.length
+    for (let i=0; i<counter; i++) {
+      ingredients.push({name: `ingredient${i}`})
+    }
+    let ingredientCards = ingredients.map(ingredient => <ImageIngredient key={ingredient.name} ingredient={ingredient} handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}/>)
+    let tools = JSON.parse(JSON.stringify(this.state.tools))
+    let counterTool = 12 - tools.length
+    for (let j=0; j<counterTool; j++) {
+      tools.push({name: `tool${j}`})
+    }
+    let toolCards = tools.map(tool => <ImageTool key={tool.name} tool={tool} handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}/>)
+    let washing = this.state.washing
+    let cooking = this.state.cooking
     return (
       <div className="container" id="game-container">
         <RecipeReminderPopup
@@ -331,46 +645,104 @@ class Game extends Component {
                                                     onDragStart={() => this.handleUpdateDraggedItemState(this.props.user)}
                                                     id="game-avatar"
                                                     alt="avatar"
-                                                    style={{width: "120px", height: "120px", borderRadius: "4px"}}
+                                                    style={{height: "100%", borderRadius: "6px", border: "2px solid"}}
                                                     src={this.props.user.avatar}
                                                   />
         </div>
         <div className="item" id="playername-holder">Chef: {this.props.user.username.charAt(0).toUpperCase() + this.props.user.username.slice(1)}</div>
-        <div className="item" id="orders-holder" onClick={this.updatePopupRecipeOpenState}><ImageOrder order={this.state.newOrder} handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}/></div>
+        <div className="item" id="orders-holder">
+          <div id="orders-holder-inner" onClick={this.updatePopupRecipeOpenState}>
+            <ImageOrder order={this.state.newOrder} handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}/>
+          </div>
+        </div>
         <div className="item" id="ordername-holder">New Order</div>
-        <div className="item" id="trash-holder"
-          onDragOver={e => {e.preventDefault(); e.stopPropagation()}}
-          onDrop={e => {e.preventDefault(); this.handleDropOnTrashCan()}}>
-          <Trash
-            level={this.props.level}
-            handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}
-          />
+        <div className="item" id="trash-holder">
+          <div id="trash-holder-inner"
+            onDragOver={e => {e.preventDefault(); e.stopPropagation()}}
+            onDrop={e => {e.preventDefault(); this.handleDropOnTrashCan()}}>
+            <Trash
+              level={this.props.level}
+              handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}
+            />
+          </div>
         </div>
         <div className="item" id="trashname-holder">Trash Can</div>
-        <div className="item" id="serve-holder"
-          onDragOver={e => {e.preventDefault(); e.stopPropagation()}}
-          onDrop={e => {e.preventDefault(); this.handleDropOfPlateAndCookedDishOnServe()}}>
-          <Serve
-            handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}
-            serveGroup={this.state.serveGroup}
-          />
+        <div className="item" id="serve-holder">
+          <div id="serve-holder-inner"
+            onDragOver={e => {e.preventDefault(); e.stopPropagation()}}
+            onDrop={e => {e.preventDefault(); this.handleDropOfPlateAndCookedDishOnServe()}}
+            onClick={this.handleClickOfServeButton}>
+            <Serve
+              handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}
+              serveGroup={this.state.serveGroup}
+            />
+          </div>
         </div>
         <div className="item" id="servebutton-holder"><button onClick={this.handleClickOfServeButton}>Serve Button</button></div>
-        <div className="item" id="washer-holder"></div>
-        <div className="item" id="washerbutton-holder"><button id="wash-button">Wash Button</button></div>
-        <div className="item" id="tips-holder"><Tips tips={this.state.tips}/></div>
+        <div className="item" id="washer-holder">
+          <div id="washer-holder-inner"
+            onDragOver={e => {e.preventDefault(); e.stopPropagation()}}
+            onDrop={e => {e.preventDefault(); this.handleDropOnWasher()}}
+            onClick={this.state.washing ? this.handleClickOfDoneWashing : this.handleClickOfWashButton}
+          >
+            <Wash
+              handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}
+              itemToWash={this.state.itemToWash}
+            />
+          </div>
+        </div>
+        <div className="item" id="washerbutton-holder">
+          {
+            !washing
+            ?
+            <button id="wash-button" style={{width: "100px"}} onClick={this.handleClickOfWashButton}>Wash Button</button>
+            :
+            <button id="wash-button" style={{width: "100px"}} onClick={this.handleClickOfDoneWashing}>{this.state.timeWashed}</button>
+          }
+        </div>
+        <div className="item" id="tips-holder">
+          <div id="tips-holder-inner">
+            <Tips tips={this.state.tips}/>
+          </div>
+        </div>
         <div className="item" id="tipsname-holder">Tips</div>
-        <div className="item" id="clock-holder"><Clock clock={this.state.clock}/></div>
+        <div className="item" id="clock-holder">
+          <div id="clock-holder-inner">
+            <Clock clock={this.state.clock}/>
+          </div>
+        </div>
         <div className="item" id="clockname-holder">Clock</div>
         <div className="item" id="ingredients-holder">{ingredientCards}</div>
         <div className="item" id="ingredientsname-holder">Fridge</div>
         <div className="item" id="masterchef-holder">
-          <Master
-            masterSpeech={this.state.masterSpeech}
-          />
+          <div id="masterchef-holder-inner">
+            <Master
+              masterSpeech={this.state.masterSpeech}
+              handleClickOnMaster={this.handleClickOnMaster}
+            />
+          </div>
         </div>
-        <div className="item" id="cookspace-holder"></div>
-        <div className="item" id="cookspacename-holder">Cook space</div>
+        <div className="item" id="cookspace-holder">
+          <div className="item" id="cookspace-id"
+            onDragOver={e => {e.preventDefault(); e.stopPropagation()}}
+            onDrop={e => {e.preventDefault(); this.handleDropOnCookSpace()}}
+          >
+            <CookSpace
+              handleUpdateDraggedItemState={this.handleUpdateDraggedItemState}
+              cookGroup={this.state.cookGroup}
+            />
+          </div>
+        </div>
+        <div className="item" id="cook-button">
+          {
+            !cooking
+            ?
+            <button id="cook-button-button" style={{width: "100px"}} onClick={this.handleClickOfCookButton}>Cook Button</button>
+            :
+            <button id="cook-button-button" style={{width: "100px"}} onClick={this.handleClickOfDoneCooking}>{this.state.timeCooked}</button>
+          }
+        </div>
+        <div className="item" id="cookspacename-holder">Cook Space</div>
         <div className="item" id="tools-holder">{toolCards}</div>
         <div className="item" id="toolsname-holder">Cabinet</div>
         <div className="item" id="controlpanel-holder">

@@ -4,13 +4,28 @@ import {withRouter} from 'react-router-dom'
 
 const ImageTool = props => {
   return (
-    <Image
-      className="image-tool"
-      draggable={true}
-      onDragStart={() => props.handleUpdateDraggedItemState(props.tool)}
-      src={props.tool.image}
-      style={{width: "120px", height: "120px", borderRadius: "4px"}}
-    />
+    <>
+      {
+        props.tool.name.includes('tool')
+        ?
+        <div className="image-tool-cell">
+          <div className="image-tool-cell-inner">
+          </div>
+        </div>
+        :
+        <div className="image-tool-cell">
+          <div className="image-tool-cell-inner">
+            <Image
+              className="image-tool"
+              draggable={true}
+              onDragStart={() => props.handleUpdateDraggedItemState(props.tool)}
+              src={props.tool.image}
+              style={{width: "70px", height: "70px", borderRadius: "4px"}}
+            />
+          </div>
+        </div>
+      }
+    </>
   )
 }
 

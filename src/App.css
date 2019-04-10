@@ -46,6 +46,9 @@
 .modal > .content {
   width: 100%;
   padding: 10px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .modal > .actions {
   width: 100%;
@@ -67,9 +70,61 @@
   border: 1px solid #cfcece;
 }
 
-.instruction {
+/* .instruction {
   width: 480px;
   height: 113px;
+  width: 90%;
+  height: 90%
+} */
+
+#imageinstruction {
+  width: 251px;
+  height: 59px;
+}
+
+#watermelon {
+  width: 251px;
+  height: 59px;
+}
+
+#cherries {
+  width: 251px;
+  height: 59px;
+}
+
+#kiwi {
+  width: 251px;
+  height: 59px;
+}
+
+#pancakes {
+  width: 251px;
+  height: 59px;
+}
+
+#doughnut {
+  width: 251px;
+  height: 59px;
+}
+
+#shortcake {
+  width: 251px;
+  height: 59px;
+}
+
+#friedshrimp {
+  width: 443px;
+  height: 59px;
+}
+
+#greensalad {
+  width: 600px;
+  height: 59px;
+}
+
+#frenchfries {
+  width: 538px;
+  height: 59px;
 }
 
 .level_logo {
@@ -82,159 +137,205 @@
 /* CSS for game page */
 #game-container {
   display: grid;
-  grid-template-columns: 14% 14% 14% 16% 14% 14% 14%;
-  grid-template-rows: 160px 30px 30px 60px 30px 390px auto;
+  grid-template-columns: 2% 14% 14% 13% 14% 13% 14% 14% 2%;
+  grid-template-rows: 28px 160px 30px 30px 60px 30px 182px 30px 40px auto;
 }
 
 #avatar-holder {
-  background-color: yellow;
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 1;
-  grid-row-end: 2;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #playername-holder {
-  background-color: orange;
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #orders-holder {
-  background-color: red;
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 1;
-  grid-row-end: 2;
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#orders-holder-inner {
+  height: 100%;
+  width: 90%;
+  background-color: orange;
+  border-radius: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #ordername-holder {
-  background-color: green;
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 3;
+  grid-row-end: 4;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #trash-holder {
-  background-color: white;
-  grid-column-start: 3;
-  grid-column-end: 4;
-  grid-row-start: 1;
-  grid-row-end: 2;
+  grid-column-start: 4;
+  grid-column-end: 5;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#trash-holder-inner {
+  height: 100%;
+  width: 90%;
+  background-color: pink;
+  border-radius: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #trashname-holder {
-  background-color: purple;
-  grid-column-start: 3;
-  grid-column-end: 4;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-column-start: 4;
+  grid-column-end: 5;
+  grid-row-start: 3;
+  grid-row-end: 4;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #serve-holder {
-  background-color: blue;
-  grid-column-start: 4;
-  grid-column-end: 5;
-  grid-row-start: 1;
-  grid-row-end: 2;
+  grid-column-start: 5;
+  grid-column-end: 6;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#serve-holder-inner {
+  height: 100%;
+  width: 90%;
+  background-color: lightblue;
+  border-radius: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #servebutton-holder {
-  background-color: green;
-  grid-column-start: 4;
-  grid-column-end: 5;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-column-start: 5;
+  grid-column-end: 6;
+  grid-row-start: 3;
+  grid-row-end: 4;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #washer-holder {
-  background-color: pink;
-  grid-column-start: 5;
-  grid-column-end: 6;
-  grid-row-start: 1;
-  grid-row-end: 2;
+  grid-column-start: 6;
+  grid-column-end: 7;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#washer-holder-inner {
+  height: 100%;
+  width: 90%;
+  background-color: lightgreen;
+  border-radius: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #washerbutton-holder {
-  background-color: blue;
-  grid-column-start: 5;
-  grid-column-end: 6;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-column-start: 6;
+  grid-column-end: 7;
+  grid-row-start: 3;
+  grid-row-end: 4;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #tips-holder {
-  background-color: green;
-  grid-column-start: 6;
-  grid-column-end: 7;
-  grid-row-start: 1;
-  grid-row-end: 2;
+  grid-column-start: 7;
+  grid-column-end: 8;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#tips-holder-inner {
+  height: 100%;
+  width: 90%;
+  background-color: orange;
+  border-radius: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #tipsname-holder {
-  background-color: red;
-  grid-column-start: 6;
-  grid-column-end: 7;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-column-start: 7;
+  grid-column-end: 8;
+  grid-row-start: 3;
+  grid-row-end: 4;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #clock-holder {
-  background-color: orange;
-  grid-column-start: 7;
-  grid-column-end: 8;
-  grid-row-start: 1;
-  grid-row-end: 2;
+  grid-column-start: 8;
+  grid-column-end: 9;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#clock-holder-inner {
+  height: 100%;
+  width: 90%;
+  background-color: pink;
+  border-radius: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #clockname-holder {
-  background-color: yellow;
-  grid-column-start: 7;
-  grid-column-end: 8;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-column-start: 8;
+  grid-column-end: 9;
+  grid-row-start: 3;
+  grid-row-end: 4;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -242,31 +343,114 @@
 
 #ingredients-holder {
   background-color: pink;
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 4;
-  grid-row-end: 7;
+  border-radius: 6px;
+  grid-column-start: 2;
+  grid-column-end: 4;
+  grid-row-start: 5;
+  grid-row-end: 8;
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
   overflow: auto;
 }
 
+.ingredient-image-cell {
+  width: 25%;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ingredient-image-cell-inner {
+  background-color: white;
+  width: 90%;
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.image-tool-cell {
+  width: 25%;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-tool-cell-inner {
+  background-color: white;
+  width: 90%;
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.cookspace-cell {
+  width: 20%;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cookspace-cell-inner {
+  background-color: lightgreen;
+  width: 90%;
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+}
+
 #ingredientsname-holder {
-  background-color: red;
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 3;
-  grid-row-end: 4;
+  grid-column-start: 2;
+  grid-column-end: 4;
+  grid-row-start: 4;
+  grid-row-end: 5;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #cookspace-holder {
-  background-color: lightblue;
-  grid-column-start: 3;
-  grid-column-end: 6;
+  grid-column-start: 4;
+  grid-column-end: 7;
+  grid-row-start: 7;
+  grid-row-end: 8;
+  display: flex;
+  justify-content: center;
+}
+
+#cookspace-id {
+  background-color: green;
+  border-radius: 8px;
+  width: 80%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  overflow: auto;
+}
+
+#cook-button {
+  grid-column-start: 4;
+  grid-column-end: 7;
+  grid-row-start: 8;
+  grid-row-end: 9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#cookspacename-holder {
+  grid-column-start: 4;
+  grid-column-end: 7;
   grid-row-start: 6;
   grid-row-end: 7;
   display: flex;
@@ -274,23 +458,13 @@
   align-items: center;
 }
 
-#cookspacename-holder {
-  background-color: yellow;
-  grid-column-start: 3;
-  grid-column-end: 6;
-  grid-row-start: 5;
-  grid-row-end: 6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 #tools-holder {
   background-color: brown;
-  grid-column-start: 6;
-  grid-column-end: 8;
-  grid-row-start: 4;
-  grid-row-end: 7;
+  border-radius: 6px;
+  grid-column-start: 7;
+  grid-column-end: 9;
+  grid-row-start: 5;
+  grid-row-end: 8;
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -298,21 +472,19 @@
 }
 
 #toolsname-holder {
-  background-color: white;
-  grid-column-start: 6;
-  grid-column-end: 8;
-  grid-row-start: 3;
-  grid-row-end: 4;
+  grid-column-start: 7;
+  grid-column-end: 9;
+  grid-row-start: 4;
+  grid-row-end: 5;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #controlpanel-holder {
-  background-color: darkgreen;
-  grid-column-start: 1;
-  grid-column-end: 8;
-  grid-row-start: 7;
+  grid-column-start: 2;
+  grid-column-end: 9;
+  grid-row-start: 8;
   grid-row: last-line;
   display: flex;
   justify-content: center;
@@ -320,28 +492,34 @@
 }
 
 #masterchef-holder {
-  background-color: lightgreen;
-  grid-column-start: 3;
-  grid-column-end: 6;
-  grid-row-start: 3;
-  grid-row-end: 5;
+  grid-column-start: 4;
+  grid-column-end: 7;
+  grid-row-start: 4;
+  grid-row-end: 6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#masterchef-holder-inner {
+  background-color: teal;
+  border-radius: 6px;
+  height: 100%;
+  width: 80%;
   display: grid;
   grid-template-columns: 30% 2% 68%;
 }
 
 #master-image {
-  background-color: white;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
 
 #master-gap {
-  background-color: white;
 }
 
 #master-speech {
-  background-color: white;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -355,8 +533,8 @@
 }
 
 .shake-master {
-  animation: bounce 1.5s infinite alternate;
-  -webkit-animation: bounce 1.5s infinite alternate;
+  animation: bounce 2s infinite alternate;
+  -webkit-animation: bounce 2s infinite alternate;
 }
 @keyframes bounce {
   from {
@@ -448,7 +626,7 @@
   align-items: center;
 }
 
-/* .order-image {
+.order-image {
   animation: orders-holder 1s linear;
 }
 @keyframes orders-holder {
@@ -458,7 +636,7 @@
  100% {
  transform: translateY(0%);
  }
-} */
+}
 
 /* .ingredient-image {
   animation: ingredients-holder 1s linear;
@@ -484,14 +662,14 @@
  }
 } */
 
-.order-image {
+/* .order-image {
   opacity: 1;
   animation: fade 2s linear;
 }
 @keyframes fade {
   0% { opacity: 0 }
   50% { opacity: 1 }
-}
+} */
 
 .ingredient-image {
   opacity: 1;
@@ -515,4 +693,13 @@
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s 0.5s, opacity 0.5s linear;
+}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
 }

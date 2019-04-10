@@ -16,7 +16,7 @@ const Serve = props => {
         draggable={true}
         onDragStart={() => props.handleUpdateDraggedItemState(props.serveGroup[0])}
         src={props.serveGroup[0].image}
-        style={{width: "120px", height: "120px", borderRadius: "4px"}}
+        style={{width: "110px", height: "110px", borderRadius: "4px"}}
       />
     }
     </>
