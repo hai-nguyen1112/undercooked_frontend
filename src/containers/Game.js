@@ -503,10 +503,12 @@ class Game extends Component {
           this.startCookTimer()
           this.setState({cooking: true})
           this.setState({cookSpaceAvailable: false})
+          document.querySelectorAll('.cook-item-image').forEach(element => element.classList.add('blink_me'))
       } else if (this.state.cooking === false && this.state.cookGroup[0].kind === 'being_used_tool') {
         this.startCookTimer()
         this.setState({cooking: true})
         this.setState({cookSpaceAvailable: false})
+        document.querySelectorAll('.cook-item-image').forEach(element => element.classList.add('blink_me'))
       }
     }
   }
