@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Popup from 'reactjs-popup'
 import {withRouter, Link} from 'react-router-dom'
-import {Image} from 'semantic-ui-react'
+import {Image, Icon, Button, List} from 'semantic-ui-react'
 
 class EndGamePopUp extends Component {
   logout = () => {
@@ -21,19 +21,29 @@ class EndGamePopUp extends Component {
           <div className="header">{this.props.tips >= this.props.level.qualified_points ? "You Won!" : "You Lost!"}</div>
           <div className="content" id="endgame-content">
             <div className="item" id="endgame-useravatar">
-              <Image alt="" src={this.props.user.avatar} style={{borderRadius: "8px"}}/>
+              <Image alt="" src={this.props.user.avatar} style={{borderRadius: "8px", border: "3px solid teal"}}/>
             </div>
             <div id="endgame-gap1"></div>
             <div className="item" id="endgame-userstats">
-              Chef: {this.props.user.username.charAt(0).toUpperCase() + this.props.user.username.slice(1)}
-              <br />
-              Bio: {this.props.user.bio}
-              <br />
-              Game level: {this.props.level.id}
-              <br />
-              Tips needed to win: ${this.props.level.qualified_points}
-              <br />
-              Your tips: ${this.props.tips}
+              <List>
+                <List.Item>
+                  <List.Icon name='user' />
+                  <List.Content>{this.props.user.username.charAt(0).toUpperCase() + this.props.user.username.slice(1)}</List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Icon name='pencil alternate' />
+                  <List.Content>{this.props.user.bio}</List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Content><strong>Game Level</strong> {this.props.level.id}</List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Content><strong>Tips Needed To Win</strong> ${this.props.level.qualified_points}</List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Content><strong>Your Tips</strong> ${this.props.tips}</List.Content>
+                </List.Item>
+              </List>
             </div>
             <div id="endgame-gap2"></div>
             <div className="item" id="endgame-master">
@@ -51,15 +61,15 @@ class EndGamePopUp extends Component {
                   ?
                   "Great Job!"
                   :
-                  "You are fired. I don't wanna see you again!"
+                  "You are fired!"
                 }
               </div>
             </div>
           </div>
           <div className="actions">
-            <Link to="/levels"><button className="button">Try Other Levels</button></Link>
-            <Link to="/profile"><button className="button">Back to Profile</button></Link>
-            <button onClick={this.logout}>Logout</button>
+            <Link to="/levels"><Button inverted className="button">Try Other Levels</Button></Link>
+            <Link to="/profile"><Button inverted className="button">Back to Profile</Button></Link>
+            <Button inverted onClick={this.logout}>Logout</Button>
           </div>
         </div>
       )}

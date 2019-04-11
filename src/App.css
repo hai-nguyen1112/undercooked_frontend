@@ -35,7 +35,8 @@
 /* CSS for popup windows */
 .modal {
   font-size: 18px;
-  font-family: 'PT Sans Caption', sans-serif;
+  /* font-family: 'PT Sans Caption', sans-serif; */
+  font-family: 'Orbitron', sans-serif;
 }
 .modal > .header {
   width: 100%;
@@ -601,7 +602,6 @@
   flex-wrap: wrap;
   justify-content: flex-end;
   align-items: center;
-  overflow: auto;
 }
 
 #endgame-gap1 {
@@ -619,8 +619,9 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  overflow: auto;
   text-align: left;
+  color: teal;
+  font-family: 'Patrick Hand', cursive;
 }
 
 #endgame-gap2 {
@@ -636,7 +637,7 @@
   grid-row-start: 3;
   grid-row-end: last-line;
   display: grid;
-  grid-template-columns: 35% 2% 63%;
+  grid-template-columns: 49% 2% 49%;
 }
 
 #endgame-master-image {
@@ -657,6 +658,8 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  color: teal;
+  font-family: 'Jua', sans-serif;
 }
 
 .order-image {
