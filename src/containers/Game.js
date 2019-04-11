@@ -820,10 +820,12 @@ class Game extends Component {
               Quit
             </Button>
           </Link>
-            <Button icon inverted color='orange' style={{width: "110px"}} labelPosition='left' onClick={this.logout}>
-              <Icon name='log out'/>
-              Logout
-            </Button>
+          </div>
+        <div className="item" id="controlpanel-holder1">
+          <Button icon inverted color='orange' style={{width: "110px"}} labelPosition='left' onClick={this.logout}>
+            <Icon name='log out'/>
+            Logout
+          </Button>
         </div>
       </div>
     )

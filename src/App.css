@@ -505,12 +505,20 @@
 
 #controlpanel-holder {
   grid-column-start: 2;
+  grid-column-end: 4;
+  grid-row-start: 9;
+  grid-row: last-line;
+  display: flex;
+  justify-content: center;
+}
+
+#controlpanel-holder1 {
+  grid-column-start: 7;
   grid-column-end: 9;
   grid-row-start: 9;
   grid-row: last-line;
   display: flex;
   justify-content: center;
-
 }
 
 #masterchef-holder {
