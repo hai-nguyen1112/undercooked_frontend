@@ -11,7 +11,6 @@ const RecipeReminderPopup = props => {
   return (
     <Popup
       open={props.open}
-      closeOnDocumentClick={false}
       modal
     >
     {close => (
@@ -19,7 +18,7 @@ const RecipeReminderPopup = props => {
       <div className="close" onClick={props.updatePopupRecipeOpenState}>
         &times;
       </div>
-      <div className="header">Recipes for Level {props.level.id}</div>
+      <div className="header">Level {props.level.id} Recipes</div>
       <div className="content">
         {instructionCards}
       </div>

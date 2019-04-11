@@ -34,14 +34,22 @@
 
 /* CSS for popup windows */
 .modal {
-  font-size: 12px;
+  font-size: 18px;
+  font-family: 'PT Sans Caption', sans-serif;
 }
 .modal > .header {
   width: 100%;
-  border-bottom: 1px solid gray;
-  font-size: 18px;
+  border-bottom: 2px solid white;
+  font-size: 22px;
   text-align: center;
   padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: teal;
+  /* border-radius: 6px; */
 }
 .modal > .content {
   width: 100%;
@@ -49,12 +57,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-content: space-between;
 }
 .modal > .actions {
   width: 100%;
   padding: 10px 5px;
   margin: auto;
   text-align: center;
+  background-color: teal;
+  /* border-radius: 6px; */
 }
 .modal > .close {
   cursor: pointer;
@@ -69,6 +80,11 @@
   border-radius: 18px;
   border: 1px solid #cfcece;
 }
+.popup-overlay > .popup-content {
+  /* border-radius: 6px; */
+  width: auto !important;
+  padding: 1px !important;
+}
 
 /* .instruction {
   width: 480px;
@@ -78,53 +94,53 @@
 } */
 
 #imageinstruction {
-  width: 251px;
-  height: 59px;
+  width: 425px;
+  height: 100px;
 }
 
 #watermelon {
-  width: 251px;
-  height: 59px;
+  width: 425px;
+  height: 100px;
 }
 
 #cherries {
-  width: 251px;
-  height: 59px;
+  width: 425px;
+  height: 100px;
 }
 
 #kiwi {
-  width: 251px;
-  height: 59px;
+  width: 425px;
+  height: 100px;
 }
 
 #pancakes {
-  width: 251px;
-  height: 59px;
+  width: 425px;
+  height: 100px;
 }
 
 #doughnut {
-  width: 251px;
-  height: 59px;
+  width: 425px;
+  height: 100px;
 }
 
 #shortcake {
-  width: 251px;
-  height: 59px;
+  width: 425px;
+  height: 100px;
 }
 
 #friedshrimp {
-  width: 443px;
-  height: 59px;
+  width: 750px;
+  height: 100px;
 }
 
 #greensalad {
-  width: 600px;
-  height: 59px;
+  width: 1012px;
+  height: 100px;
 }
 
 #frenchfries {
-  width: 538px;
-  height: 59px;
+  width: 913px;
+  height: 100px;
 }
 
 .level_logo {
@@ -300,6 +316,8 @@
   justify-content: center;
   align-items: center;
   font-size: 60px;
+  font-family: 'Exo 2', sans-serif;
+  color: rgb(177, 126, 41)
 }
 
 #tipsname-holder {
@@ -331,6 +349,8 @@
   justify-content: center;
   align-items: center;
   font-size: 60px;
+  font-family: 'Exo 2', sans-serif;
+  color: rgb(242, 87, 87)
 }
 
 #clockname-holder {
@@ -525,8 +545,9 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  color: white;
+  color: rgb(163, 210, 226);
   font-size: 20px;
+  font-family: 'Acme', sans-serif;
 }
 
 .shake {
