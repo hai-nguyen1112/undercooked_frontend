@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
-import {Button, Form, Segment, Message} from 'semantic-ui-react'
+import {Button, Form, Message} from 'semantic-ui-react'
+import MainLogo from '../components/MainLogo'
 
 class LoginForm extends Component {
   constructor() {
@@ -42,30 +43,35 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <Segment>
-        <Form onSubmit={this.handleLoginSubmit}>
-          {this.state.failedLoginMessage === undefined ? null : <Message header={this.state.failedLoginMessage}/>}
-          <Form.Group widths='equal'>
-            <Form.Input
-              type="text"
-              label="Username"
-              placeholder="Enter username..."
-              name="username"
-              onChange={this.handleChange}
-              value={this.state.username}
-            />
-            <Form.Input
-              type="password"
-              label="Password"
-              placeholder="Enter password..."
-              name="password"
-              onChange={this.handleChange}
-              value={this.state.password}
-            />
-          </Form.Group>
-          <Button type="submit">Login</Button>
-        </Form>
-      </Segment>
+      <div class="login" id="login-page">
+        <div id="login-page-mainlogo-holder">
+          <MainLogo />
+        </div>
+        <div id="login-page-loginform-holder">
+          <Form onSubmit={this.handleLoginSubmit}>
+            {this.state.failedLoginMessage === undefined ? null : <Message header={this.state.failedLoginMessage}/>}
+            <Form.Group widths='equal'>
+              <Form.Input
+                type="text"
+                label="Username"
+                placeholder="Enter username..."
+                name="username"
+                onChange={this.handleChange}
+                value={this.state.username}
+              />
+              <Form.Input
+                type="password"
+                label="Password"
+                placeholder="Enter password..."
+                name="password"
+                onChange={this.handleChange}
+                value={this.state.password}
+              />
+            </Form.Group>
+            <Button type="submit">Login</Button>
+          </Form>
+        </div>
+      </div>
     )
   }
 }

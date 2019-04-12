@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 import Nav from '../components/Nav'
 import {Table, Image, Header} from 'semantic-ui-react'
+import MainLogo from '../components/MainLogo'
 
 class Leaderboard extends Component {
   constructor() {
@@ -43,7 +44,7 @@ class Leaderboard extends Component {
     return (
       <div className="leaderboard" id="leaderboard">
         <div id="leaderboard-logo-holder">
-          <Image src="https://i.ibb.co/JB1JfYb/logo-main1.png" style={{height: "160px"}}/>
+          <MainLogo />
         </div>
         <div id="leaderboard-navbar-holder">
           <Nav user={this.props.user} handleUpdateUserState={this.props.handleUpdateUserState}/>
@@ -52,6 +53,7 @@ class Leaderboard extends Component {
           Leaderboard
         </div>
         <div id="leaderboard-filter-sort-holder">
+          Filter, Sort
         </div>
         <div id="leaderboard-table-holder">
           <Table width={"60%"}>
