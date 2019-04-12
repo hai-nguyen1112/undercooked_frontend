@@ -979,3 +979,17 @@
 div.ui.menu {
   min-height: 1em !important;
 }
+
+#sort-by-name {
+  color: white;
+}
+
+.ui.inverted.olive.menu .active.item {
+  border-radius: 4px;
+  background: white !important;
+}
+
+.ui.inverted.menu a.item:hover {
+  background: none !important;
+  border-radius: 4px !important;
+}

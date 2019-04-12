@@ -18,7 +18,7 @@ class Leaderboard extends Component {
     fetch('http://localhost:3000/api/v1/users/')
     .then(res => res.json())
     .then(users => {
-      this.setState({users: users})
+      this.setState({users: users.sort((a, b) => b.highest_score - a.highest_score)})
     })
   }
 
@@ -26,8 +26,23 @@ class Leaderboard extends Component {
     this.setState({filter: e.target.value})
   }
 
-  handleSortClick = () => {
-
+  handleSortClick = e => {
+    if (e.target.innerText === 'Best Score') {
+      this.setState({activeSort: 'bestScore'})
+      this.setState({users: this.state.users.sort((a, b) => b.highest_score - a.highest_score)})
+    }
+    if (e.target.innerText === 'Most Games') {
+      this.setState({activeSort: 'mostGames'})
+      this.setState({users: this.state.users.sort((a, b) => b.games_played - a.games_played)})
+    }
+    if (e.target.innerText === 'Most Wins') {
+      this.setState({activeSort: 'mostWins'})
+      this.setState({users: this.state.users.sort((a, b) => b.wins - a.wins)})
+    }
+    if (e.target.innerText === 'Most Losses') {
+      this.setState({activeSort: 'mostLosses'})
+      this.setState({users: this.state.users.sort((a, b) => b.losses - a.losses)})
+    }
   }
 
   render() {
@@ -44,10 +59,34 @@ class Leaderboard extends Component {
             </Header.Content>
           </Header>
         </Table.Cell>
-        <Table.Cell>{user.games_played}</Table.Cell>
-        <Table.Cell>{user.wins}</Table.Cell>
-        <Table.Cell>{user.losses}</Table.Cell>
-        <Table.Cell>{user.highest_score}</Table.Cell>
+        {
+          this.state.activeSort === 'mostGames'
+          ?
+          <Table.Cell error>{user.games_played}</Table.Cell>
+          :
+          <Table.Cell>{user.games_played}</Table.Cell>
+        }
+        {
+          this.state.activeSort === 'mostWins'
+          ?
+          <Table.Cell error>{user.wins}</Table.Cell>
+          :
+          <Table.Cell>{user.wins}</Table.Cell>
+        }
+        {
+          this.state.activeSort === 'mostLosses'
+          ?
+          <Table.Cell error>{user.losses}</Table.Cell>
+          :
+          <Table.Cell>{user.losses}</Table.Cell>
+        }
+        {
+          this.state.activeSort === 'bestScore'
+          ?
+          <Table.Cell error>{user.highest_score}</Table.Cell>
+          :
+          <Table.Cell>{user.highest_score}</Table.Cell>
+        }
       </Table.Row>
     ))
     let activeSort = this.state.activeSort
@@ -63,7 +102,7 @@ class Leaderboard extends Component {
           Leaderboard
         </div>
         <div id="leaderboard-filter-sort-holder">
-          <Menu>
+          <Menu inverted color={"olive"}>
             <Menu.Item>
               <Input
                 icon='users'
@@ -74,7 +113,7 @@ class Leaderboard extends Component {
             </Menu.Item>
             <Menu.Item>
               <Menu text>
-                <Menu.Item header>Sort By</Menu.Item>
+                <Menu.Item header id="sort-by-name">Sort By</Menu.Item>
                 <Menu.Item
                   name='bestScore'
                   active={activeSort === 'bestScore'}
@@ -100,7 +139,7 @@ class Leaderboard extends Component {
           </Menu>
         </div>
         <div id="leaderboard-table-holder">
-          <Table width={"60%"}>
+          <Table width={"60%"} color={"teal"}>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell width={1}>Rank</Table.HeaderCell>
