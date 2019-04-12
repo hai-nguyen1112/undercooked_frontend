@@ -773,6 +773,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  font-family: 'Russo One', sans-serif;
+  font-size: 50px;
+  color: rgb(0, 147, 162)
 }
 
 #leaderboard-filter-sort-holder {
@@ -783,6 +788,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 25px;
 }
 
 #leaderboard-table-holder {
@@ -845,7 +851,7 @@
 #instructions-page {
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto auto auto;
 }
 
 #instructions-page-mainlogo-holder {
@@ -867,11 +873,26 @@
   grid-row-end: 3;
 }
 
-#instructions-page-content-holder {
+#instructions-page-title-holder {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 3;
   grid-row-end: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  font-family: 'Russo One', sans-serif;
+  font-size: 50px;
+  color: rgb(0, 147, 162)
+}
+
+#instructions-page-content-holder {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 4;
+  grid-row-end: last-line;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -910,6 +931,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  font-family: 'Russo One', sans-serif;
+  font-size: 50px;
+  color: rgb(0, 147, 162)
 }
 
 #levels-page-levelcards-holder {

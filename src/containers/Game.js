@@ -656,7 +656,7 @@ class Game extends Component {
                                                     onDragStart={() => this.handleUpdateDraggedItemState(this.props.user)}
                                                     id="game-avatar"
                                                     alt="avatar"
-                                                    style={{height: "100%", borderRadius: "6px", border: "2px solid lightblue"}}
+                                                    style={{height: "100%", borderRadius: "6px"}}
                                                     src={this.props.user.avatar}
                                                   />
         </div>

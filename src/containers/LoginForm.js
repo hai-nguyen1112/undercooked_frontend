@@ -70,6 +70,8 @@ class LoginForm extends Component {
             </Form.Group>
             <Button type="submit">Login</Button>
           </Form>
+          Add Sign Up
+          If you don't want to sign up You can use the bot account to play
         </div>
       </div>
     )

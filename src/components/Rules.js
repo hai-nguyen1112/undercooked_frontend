@@ -12,8 +12,11 @@ const Rules = props => {
       <div id="instructions-page-navbar-holder">
         <Nav user={props.user} handleUpdateUserState={props.handleUpdateUserState}/>
       </div>
+      <div id="instructions-page-title-holder">
+        Game Instructions
+      </div>
       <div id="instructions-page-content-holder">
-        This is the game rules
+        Blah blah blah
       </div>
     </div>
   )

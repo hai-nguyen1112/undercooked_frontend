@@ -10,7 +10,7 @@ const Nav = ({location: {pathname}, user, handleUpdateUserState}) => {
     handleUpdateUserState({})
   }
   return (
-    <Menu pointing secondary>
+    <Menu pointing secondary color={"orange"} inverted>
       <Menu.Item
         name={`Welcome, ${user.username}`}
       />

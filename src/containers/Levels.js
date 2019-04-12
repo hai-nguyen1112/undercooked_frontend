@@ -30,7 +30,7 @@ class Levels extends Component {
           <Nav user={this.props.user} handleUpdateUserState={this.props.handleUpdateUserState}/>
         </div>
         <div id="levels-page-title-holder">
-          Please choose a level to play
+          Game Levels
         </div>
         <div id="levels-page-levelcards-holder">
           {recipePopupCards}
