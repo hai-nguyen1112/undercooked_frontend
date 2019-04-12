@@ -43,7 +43,7 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <div class="login" id="login-page">
+      <div className="login" id="login-page">
         <div id="login-page-mainlogo-holder">
           <MainLogo />
         </div>

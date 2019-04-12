@@ -1,14 +1,16 @@
 import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 import Nav from '../components/Nav'
-import {Table, Image, Header} from 'semantic-ui-react'
+import {Table, Image, Header, Menu, Input} from 'semantic-ui-react'
 import MainLogo from '../components/MainLogo'
 
 class Leaderboard extends Component {
   constructor() {
     super()
     this.state = {
-      users: []
+      users: [],
+      activeSort: 'bestScore',
+      filter: ""
     }
   }
 
@@ -17,15 +19,22 @@ class Leaderboard extends Component {
     .then(res => res.json())
     .then(users => {
       this.setState({users: users})
-      console.log(this.state.users)
     })
   }
 
+  handleFilterInput = e => {
+    this.setState({filter: e.target.value})
+  }
+
+  handleSortClick = () => {
+
+  }
+
   render() {
-    let users = this.state.users
-    let rows = users.map(user => (
-      <Table.Row>
-        <Table.Cell>{users.indexOf(user) + 1}</Table.Cell>
+    let filteredUsers = this.state.users.filter(user => user.username.includes(this.state.filter))
+    let rows = filteredUsers.map(user => (
+      <Table.Row key={user.username}>
+        <Table.Cell>{filteredUsers.indexOf(user) + 1}</Table.Cell>
         <Table.Cell>
           <Header as='h3' image>
             <Image src={user.avatar} rounded style={{width: "100px"}}/>
@@ -41,6 +50,7 @@ class Leaderboard extends Component {
         <Table.Cell>{user.highest_score}</Table.Cell>
       </Table.Row>
     ))
+    let activeSort = this.state.activeSort
     return (
       <div className="leaderboard" id="leaderboard">
         <div id="leaderboard-logo-holder">
@@ -53,7 +63,41 @@ class Leaderboard extends Component {
           Leaderboard
         </div>
         <div id="leaderboard-filter-sort-holder">
-          Filter, Sort
+          <Menu>
+            <Menu.Item>
+              <Input
+                icon='users'
+                iconPosition='left'
+                placeholder='Filter Players By Name...'
+                onChange={this.handleFilterInput}
+              />
+            </Menu.Item>
+            <Menu.Item>
+              <Menu text>
+                <Menu.Item header>Sort By</Menu.Item>
+                <Menu.Item
+                  name='bestScore'
+                  active={activeSort === 'bestScore'}
+                  onClick={this.handleSortClick}
+                />
+                <Menu.Item
+                  name='mostGames'
+                  active={activeSort === 'mostGames'}
+                  onClick={this.handleSortClick}
+                />
+                <Menu.Item
+                  name='mostWins'
+                  active={activeSort === 'mostWins'}
+                  onClick={this.handleSortClick}
+                />
+                <Menu.Item
+                  name='mostLosses'
+                  active={activeSort === 'mostLosses'}
+                  onClick={this.handleSortClick}
+                />
+              </Menu>
+            </Menu.Item>
+          </Menu>
         </div>
         <div id="leaderboard-table-holder">
           <Table width={"60%"}>
