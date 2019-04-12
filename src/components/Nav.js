@@ -12,7 +12,6 @@ const Nav = ({location: {pathname}, user, handleUpdateUserState}) => {
   return (
     <Menu pointing secondary>
       <Menu.Item
-        style={{width: '150px'}}
         name={`Welcome, ${user.username}`}
       />
       <Menu.Item
@@ -24,7 +23,7 @@ const Nav = ({location: {pathname}, user, handleUpdateUserState}) => {
       <Menu.Item
         as={NavLink}
         to="/rules"
-        name="Game Rules"
+        name="Game Instructions"
         active={pathname === "/rules"}
       />
       <Menu.Item
@@ -36,13 +35,14 @@ const Nav = ({location: {pathname}, user, handleUpdateUserState}) => {
       <Menu.Item
         as={NavLink}
         to="/levels"
-        name="Choose a Level to Play"
+        name="Play Game"
         active={pathname === "/levels"}
       />
       <Menu.Item
         to="/logout"
         name="Logout"
         onClick={logout}
+        position="right"
       />
     </Menu>
   )

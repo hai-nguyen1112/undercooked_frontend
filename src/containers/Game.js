@@ -31,7 +31,7 @@ class Game extends Component {
       clock: props.level.clock,
       popupOpen: false,
       popupRecipeOpen: false,
-      masterSpeech: 'Welcome to Overcooked kitchen!',
+      masterSpeech: "Welcome to underCooked kitchen. Remember, don't overcook!",
       itemToWash: {},
       timeWashed: 0,
       washing: false,

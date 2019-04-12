@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Popup from 'reactjs-popup'
 import {withRouter, Link} from 'react-router-dom'
-import {Image, Icon, Button, List} from 'semantic-ui-react'
+import {Image, Button, List} from 'semantic-ui-react'
 
 class EndGamePopUp extends Component {
   logout = () => {
@@ -21,7 +21,7 @@ class EndGamePopUp extends Component {
           <div className="header">{this.props.tips >= this.props.level.qualified_points ? "You Won!" : "You Lost!"}</div>
           <div className="content" id="endgame-content">
             <div className="item" id="endgame-useravatar">
-              <Image alt="" src={this.props.user.avatar} style={{borderRadius: "8px", border: "3px solid teal"}}/>
+              <Image alt="" src={this.props.user.avatar} style={{width: "200px", borderRadius: "8px", border: "3px solid teal"}}/>
             </div>
             <div id="endgame-gap1"></div>
             <div className="item" id="endgame-userstats">
