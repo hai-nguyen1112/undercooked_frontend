@@ -48,30 +48,49 @@ class LoginForm extends Component {
           <MainLogo />
         </div>
         <div id="login-page-loginform-holder">
-          <Form onSubmit={this.handleLoginSubmit}>
-            {this.state.failedLoginMessage === undefined ? null : <Message header={this.state.failedLoginMessage}/>}
-            <Form.Group widths='equal'>
-              <Form.Input
-                type="text"
-                label="Username"
-                placeholder="Enter username..."
-                name="username"
-                onChange={this.handleChange}
-                value={this.state.username}
-              />
-              <Form.Input
-                type="password"
-                label="Password"
-                placeholder="Enter password..."
-                name="password"
-                onChange={this.handleChange}
-                value={this.state.password}
-              />
-            </Form.Group>
-            <Button type="submit">Login</Button>
-          </Form>
-          Add Sign Up
-          If you don't want to sign up You can use the bot account to play
+            <div id="login-form-login-form">
+              <div id="login-page-login-name">
+                Login
+              </div>
+              <Form size="tiny" onSubmit={this.handleLoginSubmit} error style={{width: "300px", textAlign: "left"}}>
+                <Form.Input
+                  type="text"
+                  label="Username"
+                  placeholder="Enter username..."
+                  name="username"
+                  onChange={this.handleChange}
+                  value={this.state.username}
+                />
+                <Form.Input
+                  type="password"
+                  label="Password"
+                  placeholder="Enter password..."
+                  name="password"
+                  onChange={this.handleChange}
+                  value={this.state.password}
+                />
+                {this.state.failedLoginMessage === undefined
+                  ?
+                  null
+                  :
+                  <Message
+                    error
+                    header='Action Forbidden'
+                    content={this.state.failedLoginMessage}
+                  />
+                }
+                <Button size="tiny" type="submit">Submit</Button>
+              </Form>
+            </div>
+        </div>
+        <div id="login-page-botaccount-holder">
+          <div id="login-page-botaccount-holder-inner">
+            If you don't have an account, please use Bot account to log in.
+          <br />
+            <strong>Username</strong> bot
+          <br />
+            <strong>Password</strong> 123456
+          </div>
         </div>
       </div>
     )
