@@ -31,7 +31,7 @@ class Game extends Component {
       clock: props.level.clock,
       popupOpen: false,
       popupRecipeOpen: false,
-      masterSpeech: "Welcome to underCooked kitchen. Remember, don't overcook!",
+      masterSpeech: "Welcome to underCooked! kitchen. Remember, don't overcook!",
       itemToWash: {},
       timeWashed: 0,
       washing: false,
@@ -607,7 +607,7 @@ class Game extends Component {
 
   handleClickOnMaster = () => {
     this.addShakeClassMaster('.master-avatar')
-    this.setState({masterSpeech: "Focus on cooking please. We don't have time to chat now."})
+    this.setState({masterSpeech: "Focus on cooking please. We don't have time to chat."})
     setTimeout(this.clearMasterSpeech, 1700)
   }
 

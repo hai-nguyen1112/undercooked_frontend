@@ -611,8 +611,11 @@
   justify-content: flex-start;
   align-items: center;
   color: rgb(163, 210, 226);
-  font-size: 20px;
-  font-family: 'Acme', sans-serif;
+  font-size: 18px;
+  font-family: 'Source Code Pro', monospace;
+  padding-left: 2px;
+  padding-right: 5px;
+  text-align: left;
 }
 
 .shake {
@@ -881,7 +884,7 @@
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 2;
-  grid-row-end: 3;
+  grid-row-end: 3
 }
 
 #profile-page-welcome-holder {
@@ -889,9 +892,41 @@
   grid-column-end: 2;
   grid-row-start: 3;
   grid-row-end: 4;
+  display: grid;
+  grid-template-columns: 35% 65%;
+  grid-template-rows: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+#profile-page-welcome-masterchef-avatar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 10px;
+}
+
+#profile-page-welcome-message-holder {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 55%;
+}
+
+#profile-page-welcome-message {
+  width: 100%;
+  height: 65%;
+  background-color: pink;
+  border-radius: 6px;
+}
+
+#welcome-message {
+  text-align: left;
+  padding-top: 3px;
+  padding-left: 8px;
+  padding-right: 3px;
+  padding-bottom: 5px;
+  font-family: 'Source Code Pro', monospace;
 }
 
 #profile-page-user-holder {
@@ -902,6 +937,36 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+}
+
+#profile-page-user-holder-inner {
+  background-color: pink;
+  padding: 5px 5px 5px 5px;
+  width: 30%;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  grid-template-rows: 100%;
+}
+
+#profile-useravatar {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: last-line;
+}
+
+#profile-userstats {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: last-line;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  font-family: 'Exo 2', sans-serif;
 }
 
 #instructions-page {
