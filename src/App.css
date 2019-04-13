@@ -155,20 +155,10 @@
 #game-container {
   display: grid;
   grid-template-columns: 2% 14% 14% 13% 14% 13% 14% 14% 2%;
-  grid-template-rows: 28px 160px 50px 50px 60px 30px 182px 50px auto;
+  grid-template-rows: 28px auto 160px auto 60px auto 173px 9px auto;
 }
 
 #avatar-holder {
-  grid-column-start: 2;
-  grid-column-end: 3;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#playername-holder {
   grid-column-start: 2;
   grid-column-end: 3;
   grid-row-start: 3;
@@ -178,11 +168,26 @@
   align-items: center;
 }
 
+#playername-holder {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 5px;
+  font-size: 18px;
+  font-family: 'Play', sans-serif;
+  font-weight: bold;
+  color: rgb(97, 176, 129)
+}
+
 #orders-holder {
   grid-column-start: 3;
   grid-column-end: 4;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -201,18 +206,23 @@
 #ordername-holder {
   grid-column-start: 3;
   grid-column-end: 4;
-  grid-row-start: 3;
-  grid-row-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 5px;
+  font-size: 18px;
+  font-family: 'Play', sans-serif;
+  font-weight: bold;
+  color: rgb(141, 106, 85)
 }
 
 #trash-holder {
   grid-column-start: 4;
   grid-column-end: 5;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -231,18 +241,23 @@
 #trashname-holder {
   grid-column-start: 4;
   grid-column-end: 5;
-  grid-row-start: 3;
-  grid-row-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 5px;
+  font-size: 18px;
+  font-family: 'Play', sans-serif;
+  font-weight: bold;
+  color: rgb(203, 55, 42)
 }
 
 #serve-holder {
   grid-column-start: 5;
   grid-column-end: 6;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -261,18 +276,23 @@
 #servebutton-holder {
   grid-column-start: 5;
   grid-column-end: 6;
-  grid-row-start: 3;
-  grid-row-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 5px;
+  font-size: 18px;
+  font-family: 'Play', sans-serif;
+  font-weight: bold;
+  color: rgb(33, 65, 124)
 }
 
 #washer-holder {
   grid-column-start: 6;
   grid-column-end: 7;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -291,18 +311,23 @@
 #washerbutton-holder {
   grid-column-start: 6;
   grid-column-end: 7;
-  grid-row-start: 3;
-  grid-row-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 5px;
+  font-size: 18px;
+  font-family: 'Play', sans-serif;
+  font-weight: bold;
+  color: rgb(95, 139, 235)
 }
 
 #tips-holder {
   grid-column-start: 7;
   grid-column-end: 8;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -324,18 +349,23 @@
 #tipsname-holder {
   grid-column-start: 7;
   grid-column-end: 8;
-  grid-row-start: 3;
-  grid-row-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 5px;
+  font-size: 18px;
+  font-family: 'Play', sans-serif;
+  font-weight: bold;
+  color: pink;
 }
 
 #clock-holder {
   grid-column-start: 8;
   grid-column-end: 9;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -357,11 +387,16 @@
 #clockname-holder {
   grid-column-start: 8;
   grid-column-end: 9;
-  grid-row-start: 3;
-  grid-row-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 3;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 5px;
+  font-size: 18px;
+  font-family: 'Play', sans-serif;
+  font-weight: bold;
+  color: rgb(246, 205, 72)
 }
 
 #ingredients-holder {
@@ -439,13 +474,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 20px;
+  padding-bottom: 5px;
+  font-size: 18px;
+  font-family: 'Play', sans-serif;
+  font-weight: bold;
+  color: rgb(54, 126, 127)
 }
 
 #cookspace-holder {
   grid-column-start: 4;
   grid-column-end: 7;
   grid-row-start: 7;
-  grid-row-end: 8;
+  grid-row-end: 9;
   display: flex;
   justify-content: center;
 }
@@ -464,11 +505,17 @@
 #cook-button {
   grid-column-start: 4;
   grid-column-end: 7;
-  grid-row-start: 8;
-  grid-row-end: 9;
+  grid-row-start: 6;
+  grid-row-end: 7;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  font-size: 18px;
+  font-family: 'Play', sans-serif;
+  font-weight: bold;
+  color: rgb(146, 50, 45)
 }
 
 #cookspacename-holder {
@@ -502,6 +549,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 20px;
+  padding-bottom: 5px;
+  font-size: 18px;
+  font-family: 'Play', sans-serif;
+  font-weight: bold;
+  color: rgb(116, 173, 133)
 }
 
 #controlpanel-holder {
@@ -511,6 +564,7 @@
   grid-row: last-line;
   display: flex;
   justify-content: center;
+  padding-top: 15px;
 }
 
 #controlpanel-holder1 {
@@ -520,6 +574,7 @@
   grid-row: last-line;
   display: flex;
   justify-content: center;
+  padding-top: 15px;
 }
 
 #masterchef-holder {
@@ -527,6 +582,7 @@
   grid-column-end: 7;
   grid-row-start: 4;
   grid-row-end: 6;
+  padding-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;

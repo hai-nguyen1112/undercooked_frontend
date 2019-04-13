@@ -198,7 +198,6 @@ class Game extends Component {
         } else if (this.state.draggedItem.kind === 'washed_tool') {
           draggedItem.kind = 'serve_tool'
           this.setState({itemToWash: {}})
-          document.getElementById("wash-button").disabled = false
           serveGroup.push(draggedItem)
         } else if (this.state.draggedItem.kind === 'wellDone') {
           draggedItem.kind = 'serve_ingredient'
@@ -206,7 +205,6 @@ class Game extends Component {
           this.setState({cookGroup: []})
           this.setState({cooking: false})
           this.setState({cookSpaceAvailable: true})
-          document.getElementById("cook-button-button").disabled = false
         }
       } else if (serveGroup.length === 1 && serveGroup[0].kind !== 'recipe') {
         if (serveGroup[0].kind === 'serve_ingredient' && this.state.draggedItem.kind === 'tool') {
@@ -243,7 +241,6 @@ class Game extends Component {
           console.log("copy cooked dish:", copyOfCookedDish)
           console.log("cooked dish:", cookedDish)
           this.setState({itemToWash: {}})
-          document.getElementById("wash-button").disabled = false
         } else if (serveGroup[0].kind === 'serve_tool' && this.state.draggedItem.kind === 'wellDone') {
           serveGroup.push(this.state.draggedItem)
           dishName = serveGroup.filter(item => item.name !== 'clean_plate')[0].name
@@ -255,7 +252,6 @@ class Game extends Component {
           this.setState({cookGroup: []})
           this.setState({cooking: false})
           this.setState({cookSpaceAvailable: true})
-          document.getElementById("cook-button-button").disabled = false
           console.log("copy cooked dish:", copyOfCookedDish)
           console.log("cooked dish:", cookedDish)
         }
@@ -356,7 +352,6 @@ class Game extends Component {
     if (this.state.draggedItem.kind === 'broken_tool') {
       this.setState({itemToWash: {}})
       this.addShakeClass(".trash-image")
-      document.getElementById("wash-button").disabled = false
     }
     if (this.state.draggedItem.kind === 'washing_tool' && this.state.washing !== true) {
       this.addShakeClassMaster('.master-avatar')
@@ -364,7 +359,6 @@ class Game extends Component {
       setTimeout(this.clearMasterSpeech, 1700)
       this.setState({itemToWash: {}})
       this.addShakeClass(".trash-image")
-      document.getElementById("wash-button").disabled = false
     }
     if (this.state.draggedItem.kind === 'washed_tool') {
       this.addShakeClassMaster('.master-avatar')
@@ -372,7 +366,6 @@ class Game extends Component {
       setTimeout(this.clearMasterSpeech, 1700)
       this.setState({itemToWash: {}})
       this.addShakeClass(".trash-image")
-      document.getElementById("wash-button").disabled = false
     }
     if (this.state.draggedItem.kind === 'raw_ingredient') {
       this.addShakeClassMaster('.master-avatar')
@@ -406,7 +399,6 @@ class Game extends Component {
       this.setState({cookGroup: []})
       this.setState({cooking: false})
       this.setState({cookSpaceAvailable: true})
-      document.getElementById("cook-button-button").disabled = false
       this.addShakeClass(".trash-image")
     }
     if (this.state.draggedItem.kind === 'wellDone') {
@@ -416,7 +408,6 @@ class Game extends Component {
       this.setState({cookGroup: []})
       this.setState({cooking: false})
       this.setState({cookSpaceAvailable: true})
-      document.getElementById("cook-button-button").disabled = false
       this.addShakeClass(".trash-image")
     }
   }
@@ -539,7 +530,6 @@ class Game extends Component {
       clearInterval(this.interval)
       this.setState({washing: false})
       this.setState({timeWashed: 0})
-      document.getElementById("wash-button").disabled = true
     }
   }
 
@@ -590,7 +580,6 @@ class Game extends Component {
         clearInterval(this.interval1)
         this.setState({cooking: false})
         this.setState({timeCooked: 0})
-        document.getElementById("cook-button-button").disabled = true
       }
     }
   }
@@ -661,10 +650,8 @@ class Game extends Component {
                                                   />
         </div>
         <div className="item" id="playername-holder">
-          <Button icon inverted color='orange' style={{width: "110px"}} labelPosition='left' id="playername-holder-button">
             <Icon name='user'/>
             {this.props.user.username.charAt(0).toUpperCase() + this.props.user.username.slice(1)}
-          </Button>
         </div>
         <div className="item" id="orders-holder">
           <div id="orders-holder-inner" onClick={this.updatePopupRecipeOpenState}>
@@ -672,10 +659,8 @@ class Game extends Component {
           </div>
         </div>
         <div className="item" id="ordername-holder">
-          <Button icon inverted color='violet' style={{width: "110px"}} labelPosition='left'>
             <Icon name='bell'/>
             Order
-          </Button>
         </div>
         <div className="item" id="trash-holder">
           <div id="trash-holder-inner"
@@ -688,10 +673,8 @@ class Game extends Component {
           </div>
         </div>
         <div className="item" id="trashname-holder">
-          <Button icon inverted color='green' style={{width: "110px"}} labelPosition='left'>
             <Icon name='trash'/>
             Trash
-          </Button>
         </div>
         <div className="item" id="serve-holder">
           <div id="serve-holder-inner"
@@ -705,10 +688,8 @@ class Game extends Component {
           </div>
         </div>
         <div className="item" id="servebutton-holder">
-          <Button icon inverted color='red' style={{width: "110px"}} labelPosition='left' onClick={this.handleClickOfServeButton}>
             <Icon name='utensils'/>
             Serve
-          </Button>
         </div>
         <div className="item" id="washer-holder">
           <div id="washer-holder-inner"
@@ -726,17 +707,15 @@ class Game extends Component {
           {
             !washing
             ?
-            <Button icon inverted color='blue' style={{width: "110px"}} labelPosition='left' id="wash-button" onClick={this.handleClickOfWashButton}>
+            <>
               <Icon name='tint'/>
-              Wash
-            </Button>
-            // <button id="wash-button" style={{width: "100px"}} onClick={this.handleClickOfWashButton}>Wash Button</button>
+              Sink
+            </>
             :
-            <Button icon inverted color='blue' style={{width: "110px"}} labelPosition='left' id="wash-button" onClick={this.handleClickOfDoneWashing}>
+            <>
               <Icon name='clock'/>
               {this.state.timeWashed}
-            </Button>
-            // <button id="wash-button" style={{width: "100px"}} onClick={this.handleClickOfDoneWashing}>{this.state.timeWashed}</button>
+            </>
           }
         </div>
         <div className="item" id="tips-holder">
@@ -745,10 +724,8 @@ class Game extends Component {
           </div>
         </div>
         <div className="item" id="tipsname-holder">
-          <Button icon inverted color='pink' style={{width: "110px"}} labelPosition='left'>
             <Icon name='thumbs up'/>
             Tips
-          </Button>
         </div>
         <div className="item" id="clock-holder">
           <div id="clock-holder-inner">
@@ -756,17 +733,13 @@ class Game extends Component {
           </div>
         </div>
         <div className="item" id="clockname-holder">
-          <Button icon inverted color='olive' style={{width: "110px"}} labelPosition='left'>
             <Icon name='hourglass'/>
             Clock
-          </Button>
         </div>
         <div className="item" id="ingredients-holder">{ingredientCards}</div>
         <div className="item" id="ingredientsname-holder">
-          <Button icon inverted color='blue' style={{width: "110px"}} labelPosition='left'>
             <Icon name='calculator'/>
             Fridge
-          </Button>
         </div>
         <div className="item" id="masterchef-holder">
           <div id="masterchef-holder-inner">
@@ -792,37 +765,33 @@ class Game extends Component {
           {
             !cooking
             ?
-            <Button icon inverted color='purple' style={{width: "110px"}} labelPosition='left' id="cook-button-button" onClick={this.handleClickOfCookButton}>
+            <>
               <Icon name='power off'/>
-              Cook
-            </Button>
-            // <button id="cook-button-button" style={{width: "100px"}} onClick={this.handleClickOfCookButton}>Cook Button</button>
+              Stove
+            </>
             :
-            <Button icon inverted color='purple' style={{width: "110px"}} labelPosition='left' id="cook-button-button" onClick={this.handleClickOfDoneCooking}>
+            <>
               <Icon name='clock'/>
               {this.state.timeCooked}
-            </Button>
-            // <button id="cook-button-button" style={{width: "100px"}} onClick={this.handleClickOfDoneCooking}>{this.state.timeCooked}</button>
+            </>
           }
         </div>
         <div className="item" id="cookspacename-holder"></div>
         <div className="item" id="tools-holder">{toolCards}</div>
         <div className="item" id="toolsname-holder">
-          <Button icon inverted color='orange' style={{width: "110px"}} labelPosition='left'>
             <Icon name='columns'/>
             Cabinet
-          </Button>
         </div>
         <div className="item" id="controlpanel-holder">
           <Link to="/profile">
-            <Button icon inverted color='blue' style={{width: "110px"}} labelPosition='left'>
+            <Button icon color='blue' style={{width: "110px"}} labelPosition='left'>
               <Icon name='external alternate'/>
               Quit
             </Button>
           </Link>
           </div>
         <div className="item" id="controlpanel-holder1">
-          <Button icon inverted color='orange' style={{width: "110px"}} labelPosition='left' onClick={this.logout}>
+          <Button icon color='orange' style={{width: "110px"}} labelPosition='left' onClick={this.logout}>
             <Icon name='log out'/>
             Logout
           </Button>
