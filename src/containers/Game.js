@@ -98,10 +98,10 @@ class Game extends Component {
 
     clockCountdownInterval = setInterval(this.handleCountdownClockState, 1000)
 
-    this.setState({masterSpeech: "Welcome to the underCooked! kitchen. Remember, don't overcook!"})
-    this.masterSpeak("Welcome to the underCooked kitchen. Remember, don't overcook!")
-    this.addShakeClassMaster('.master-avatar')
-    setTimeout(this.clearMasterSpeech, 1700)
+    this.setState({masterSpeech: "Welcome to the underCooked! kitchen."})
+    this.masterSpeak("Welcome to the underCooked kitchen.")
+    this.addShakeClassMaster('.master-avatar', 1800)
+    setTimeout(this.clearMasterSpeech, 1800)
   }
 
   handleCountdownClockState = () => {
@@ -284,46 +284,46 @@ class Game extends Component {
     if (!isEmpty(this.state.serveGroup)) {
       if (this.state.serveGroup[0].kind === 'serve_recipe') {
         if (this.state.serveGroup[0].name === this.state.newOrder.name) {
-          this.addShakeClassMaster('.master-avatar')
+          this.addShakeClassMaster('.master-avatar', 900)
           this.setState({masterSpeech: "Great job."})
           this.masterSpeak("Great job.")
-          setTimeout(this.clearMasterSpeech, 1700)
+          setTimeout(this.clearMasterSpeech, 900)
           this.setState({tips: this.state.tips + 10})
           this.addFadeOutClass('.serve-image')
           setTimeout(this.updateServeGroupState, 500)
           this.addFadeOutClass('.order-image')
           setTimeout(this.clearNewOrderState, 500)
         } else {
-          this.addShakeClassMaster('.master-avatar')
-          this.setState({masterSpeech: "You cooked the wrong dish. Toss it."})
-          this.masterSpeak("You cooked the wrong dish. Toss it.")
-          setTimeout(this.clearMasterSpeech, 1700)
+          this.addShakeClassMaster('.master-avatar', 3000)
+          this.setState({masterSpeech: "Oh no, you cooked the wrong dish. Toss it."})
+          this.masterSpeak("Oh no, you cooked the wrong dish. Toss it.")
+          setTimeout(this.clearMasterSpeech, 3000)
         }
       } else {
         if (this.state.serveGroup[0].kind === 'serve_tool') {
-          this.addShakeClassMaster('.master-avatar')
+          this.addShakeClassMaster('.master-avatar', 3200)
           this.setState({masterSpeech: "You can't serve an empty plate. Put something on it."})
           this.masterSpeak("You can't serve an empty plate. Put something on it.")
-          setTimeout(this.clearMasterSpeech, 1700)
+          setTimeout(this.clearMasterSpeech, 3200)
         } else if (this.state.serveGroup[0].kind === 'serve_ingredient') {
           if (this.state.serveGroup[0].name === this.state.newOrder.name) {
-            this.addShakeClassMaster('.master-avatar')
-            this.setState({masterSpeech: "You can't serve without a plate. Give it a plate."})
-            this.masterSpeak("You can't serve without a plate. Give it a plate.")
-            setTimeout(this.clearMasterSpeech, 1700)
+            this.addShakeClassMaster('.master-avatar', 3000)
+            this.setState({masterSpeech: "You can't serve without a plate. Get a plate."})
+            this.masterSpeak("You can't serve without a plate. Get a plate.")
+            setTimeout(this.clearMasterSpeech, 3000)
           } else {
-            this.addShakeClassMaster('.master-avatar')
-            this.setState({masterSpeech: "You cooked the wrong dish. Toss it."})
-            this.masterSpeak("You cooked the wrong dish. Toss it.")
-            setTimeout(this.clearMasterSpeech, 1700)
+            this.addShakeClassMaster('.master-avatar', 3000)
+            this.setState({masterSpeech: "Oh no, you cooked the wrong dish. Toss it."})
+            this.masterSpeak("Oh no, you cooked the wrong dish. Toss it.")
+            setTimeout(this.clearMasterSpeech, 3000)
           }
         }
       }
     } else {
-      this.addShakeClassMaster('.master-avatar')
-      this.setState({masterSpeech: "Hey, you have to cook a dish before serving."})
-      this.masterSpeak("Hey, you have to cook a dish before serving.")
-      setTimeout(this.clearMasterSpeech, 1700)
+      this.addShakeClassMaster('.master-avatar', 2100)
+      this.setState({masterSpeech: "You have to cook a dish before serving."})
+      this.masterSpeak("You have to cook a dish before serving.")
+      setTimeout(this.clearMasterSpeech, 2100)
     }
   }
 
@@ -341,26 +341,26 @@ class Game extends Component {
       this.addShakeClass(".trash-image")
     }
     if (this.state.draggedItem.kind === 'tool') {
-      this.addShakeClassMaster('.master-avatar')
-      this.setState({masterSpeech: "Hey, don't throw usable tools away."})
-      this.masterSpeak("Hey, don't throw usable tools away.")
-      setTimeout(this.clearMasterSpeech, 1700)
+      this.addShakeClassMaster('.master-avatar', 2500)
+      this.setState({masterSpeech: "Oh no, don't throw usable tools away."})
+      this.masterSpeak("Oh no, don't throw usable tools away.")
+      setTimeout(this.clearMasterSpeech, 2500)
       this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
       this.addShakeClass(".trash-image")
     }
     if (this.state.draggedItem.kind === 'ingredient') {
-      this.addShakeClassMaster('.master-avatar')
-      this.setState({masterSpeech: "Hey, don't throw fresh ingredients away."})
-      this.masterSpeak("Hey, don't throw fresh ingredients away.")
-      setTimeout(this.clearMasterSpeech, 1700)
+      this.addShakeClassMaster('.master-avatar', 4800)
+      this.setState({masterSpeech: "Oh no, don't throw fresh ingredients away. Think of the starving children."})
+      this.masterSpeak("Oh no, don't throw fresh ingredients away. Think of the starving children.")
+      setTimeout(this.clearMasterSpeech, 4800)
       this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
       this.addShakeClass(".trash-image")
     }
     if (this.state.draggedItem.kind === 'dirty_tool') {
-      this.addShakeClassMaster('.master-avatar')
-      this.setState({masterSpeech: "Hey, don't throw usable tools away."})
-      this.masterSpeak("Hey, don't throw usable tools away.")
-      setTimeout(this.clearMasterSpeech, 1700)
+      this.addShakeClassMaster('.master-avatar', 2500)
+      this.setState({masterSpeech: "Oh no, don't throw usable tools away."})
+      this.masterSpeak("Oh no, don't throw usable tools away.")
+      setTimeout(this.clearMasterSpeech, 2500)
       this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
       this.addShakeClass(".trash-image")
     }
@@ -369,50 +369,50 @@ class Game extends Component {
       this.addShakeClass(".trash-image")
     }
     if (this.state.draggedItem.kind === 'washing_tool' && this.state.washing !== true) {
-      this.addShakeClassMaster('.master-avatar')
-      this.setState({masterSpeech: "Hey, don't throw usable tools away."})
-      this.masterSpeak("Hey, don't throw usable tools away.")
-      setTimeout(this.clearMasterSpeech, 1700)
+      this.addShakeClassMaster('.master-avatar', 2500)
+      this.setState({masterSpeech: "Oh no, don't throw usable tools away."})
+      this.masterSpeak("Oh no, don't throw usable tools away.")
+      setTimeout(this.clearMasterSpeech, 2500)
       this.setState({itemToWash: {}})
       this.addShakeClass(".trash-image")
     }
     if (this.state.draggedItem.kind === 'washed_tool') {
-      this.addShakeClassMaster('.master-avatar')
-      this.setState({masterSpeech: "Hey, don't throw usable tools away."})
-      this.masterSpeak("Hey, don't throw usable tools away.")
-      setTimeout(this.clearMasterSpeech, 1700)
+      this.addShakeClassMaster('.master-avatar', 2500)
+      this.setState({masterSpeech: "Oh no, don't throw usable tools away."})
+      this.masterSpeak("Oh no, don't throw usable tools away.")
+      setTimeout(this.clearMasterSpeech, 2500)
       this.setState({itemToWash: {}})
       this.addShakeClass(".trash-image")
     }
     if (this.state.draggedItem.kind === 'raw_ingredient') {
-      this.addShakeClassMaster('.master-avatar')
-      this.setState({masterSpeech: "Hey, don't throw fresh ingredients away."})
-      this.masterSpeak("Hey, don't throw fresh ingredients away.")
-      setTimeout(this.clearMasterSpeech, 1700)
+      this.addShakeClassMaster('.master-avatar', 4800)
+      this.setState({masterSpeech: "Oh no, don't throw fresh ingredients away. Think of the starving children."})
+      this.masterSpeak("Oh no, don't throw fresh ingredients away. Think of the starving children.")
+      setTimeout(this.clearMasterSpeech, 4800)
       this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
       this.addShakeClass(".trash-image")
     }
     if (this.state.draggedItem.kind === 'cooking_tool') {
-      this.addShakeClassMaster('.master-avatar')
-      this.setState({masterSpeech: "Hey, don't throw usable tools away."})
-      this.masterSpeak("Hey, don't throw usable tools away.")
-      setTimeout(this.clearMasterSpeech, 1700)
+      this.addShakeClassMaster('.master-avatar', 2500)
+      this.setState({masterSpeech: "Oh no, don't throw usable tools away."})
+      this.masterSpeak("Oh no, don't throw usable tools away.")
+      setTimeout(this.clearMasterSpeech, 2500)
       this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
       this.addShakeClass(".trash-image")
     }
     if (this.state.draggedItem.kind === 'being_used_tool') {
-      this.addShakeClassMaster('.master-avatar')
-      this.setState({masterSpeech: "Hey, don't throw usable tools away."})
-      this.masterSpeak("Hey, don't throw usable tools away.")
-      setTimeout(this.clearMasterSpeech, 1700)
+      this.addShakeClassMaster('.master-avatar', 2500)
+      this.setState({masterSpeech: "Oh no, don't throw usable tools away."})
+      this.masterSpeak("Oh no, don't throw usable tools away.")
+      setTimeout(this.clearMasterSpeech, 2500)
       this.setState({cookGroup: this.state.cookGroup.filter(item => item.name !== this.state.draggedItem.name)})
       this.addShakeClass(".trash-image")
     }
     if (this.state.draggedItem.kind === 'being_cooked_ingredient') {
-      this.addShakeClassMaster('.master-avatar')
-      this.setState({masterSpeech: "Hey, don't throw fresh ingredients away."})
-      this.masterSpeak("Hey, don't throw fresh ingredients away.")
-      setTimeout(this.clearMasterSpeech, 1700)
+      this.addShakeClassMaster('.master-avatar', 4800)
+      this.setState({masterSpeech: "Oh no, don't throw fresh ingredients away. Think of the starving children."})
+      this.masterSpeak("Oh no, don't throw fresh ingredients away. Think of the starving children.")
+      setTimeout(this.clearMasterSpeech, 4800)
       this.setState({cookGroup: this.state.cookGroup.filter(item => item.name !== this.state.draggedItem.name)})
       this.addShakeClass(".trash-image")
     }
@@ -423,10 +423,10 @@ class Game extends Component {
       this.addShakeClass(".trash-image")
     }
     if (this.state.draggedItem.kind === 'wellDone') {
-      this.addShakeClassMaster('.master-avatar')
-      this.setState({masterSpeech: "Hey, don't throw perfectly cooked dish away."})
-      this.masterSpeak("Hey, don't throw perfectly cooked dish away.")
-      setTimeout(this.clearMasterSpeech, 1700)
+      this.addShakeClassMaster('.master-avatar', 4800)
+      this.setState({masterSpeech: "Oh no, don't throw perfectly cooked dish away. Think of the starving children."})
+      this.masterSpeak("Oh no, don't throw perfectly cooked dish away. Think of the starving children.")
+      setTimeout(this.clearMasterSpeech, 4800)
       this.setState({cookGroup: []})
       this.setState({cooking: false})
       this.setState({cookSpaceAvailable: true})
@@ -443,9 +443,9 @@ class Game extends Component {
     setTimeout(() => document.querySelector(selector).classList.remove('shake'), 500)
   }
 
-  addShakeClassMaster = selector => {
+  addShakeClassMaster = (selector, time) => {
     document.querySelector(selector).classList.add('shake-master')
-    setTimeout(() => document.querySelector(selector).classList.remove('shake-master'), 2000)
+    setTimeout(() => document.querySelector(selector).classList.remove('shake-master'), time)
   }
 
   updateNewOrderState = () => {
@@ -544,10 +544,10 @@ class Game extends Component {
         this.setState({itemToWash: washedItem})
       } else {
         this.setState({itemToWash: this.props.level.plates.find(plate => plate.name === "broken_plate")})
-        this.addShakeClassMaster('.master-avatar')
+        this.addShakeClassMaster('.master-avatar', 2900)
         this.setState({masterSpeech: "Oh no, you broke the plate. Toss it."})
         this.masterSpeak("Oh no, you broke the plate. Toss it.")
-        setTimeout(this.clearMasterSpeech, 1700)
+        setTimeout(this.clearMasterSpeech, 2900)
       }
       this.removeBlinkClass('.wash-image')
       clearInterval(this.interval)
@@ -583,24 +583,24 @@ class Game extends Component {
             this.setState({cookGroup: [wellDoneDish]})
           } else {
             this.setState({cookGroup: [this.state.ruinedDish]})
-            this.addShakeClassMaster('.master-avatar')
+            this.addShakeClassMaster('.master-avatar', 2800)
             this.setState({masterSpeech: "Oh no, you cooked a mess. Toss it."})
             this.masterSpeak("Oh no, you cooked a mess. Toss it.")
-            setTimeout(this.clearMasterSpeech, 1700)
+            setTimeout(this.clearMasterSpeech, 2800)
           }
         } else {
           this.setState({cookGroup: [this.state.ruinedDish]})
-          this.addShakeClassMaster('.master-avatar')
+          this.addShakeClassMaster('.master-avatar', 2800)
           this.setState({masterSpeech: "Oh no, you cooked a mess. Toss it."})
           this.masterSpeak("Oh no, you cooked a mess. Toss it.")
-          setTimeout(this.clearMasterSpeech, 1700)
+          setTimeout(this.clearMasterSpeech, 2800)
         }
       } else if (this.state.timeCooked > this.state.newOrder.cooktime) {
         this.setState({cookGroup: [this.state.burnedDish]})
-        this.addShakeClassMaster('.master-avatar')
+        this.addShakeClassMaster('.master-avatar', 3800)
         this.setState({masterSpeech: "Oh no, you overcooked it. Throw the burnt thing away."})
         this.masterSpeak("Oh no, you overcooked it. Throw the burnt thing away.")
-        setTimeout(this.clearMasterSpeech, 1700)
+        setTimeout(this.clearMasterSpeech, 3800)
       }
       if (this.state.timeCooked >= this.state.newOrder.cooktime) {
         clearInterval(this.interval1)
@@ -632,10 +632,10 @@ class Game extends Component {
   }
 
   handleClickOnMaster = () => {
-    this.addShakeClassMaster('.master-avatar')
+    this.addShakeClassMaster('.master-avatar', 3800)
     this.setState({masterSpeech: "Focus on cooking please. We don't have time to chat."})
     this.masterSpeak("Focus on cooking please. We don't have time to chat.")
-    setTimeout(this.clearMasterSpeech, 1700)
+    setTimeout(this.clearMasterSpeech, 3800)
   }
 
   masterSpeak = (text) => {

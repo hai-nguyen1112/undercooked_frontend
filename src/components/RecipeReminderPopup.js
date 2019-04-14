@@ -28,7 +28,7 @@ const RecipeReminderPopup = props => {
       </div>
       <div className="header">Level {props.level.id} Instructions</div>
       <div className="content">
-        You have {props.level.clock} seconds to make minimum ${props.level.qualified_points} in tips.
+        You have {props.level.clock} seconds to make at least ${props.level.qualified_points} in tips.
         <br />
         <br />
         Actions required: {actions}
