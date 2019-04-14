@@ -25,7 +25,7 @@ class Profile extends Component {
           </div>
           <div id="profile-page-welcome-message-holder">
             <div id="profile-page-welcome-message">
-              <div id="welcome-message">Welcome {this.props.user.username.charAt(0).toUpperCase() + this.props.user.username.slice(1)}! I am the owner of <strong>underCooked!</strong> kitchen.
+              <div id="welcome-message">Welcome {this.props.user.username.charAt(0).toUpperCase() + this.props.user.username.slice(1)}! I am the owner of the <strong>underCooked!</strong> kitchen.
               If this is your first time here, please take a look at <Link to="/rules" style={{fontWeight: "700", color: 'red', textDecoration: 'underline red'}}> game instructions</Link> before playing.
               </div>
             </div>

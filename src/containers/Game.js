@@ -98,8 +98,8 @@ class Game extends Component {
 
     clockCountdownInterval = setInterval(this.handleCountdownClockState, 1000)
 
-    this.setState({masterSpeech: "Welcome to underCooked! kitchen. Remember, don't overcook!"})
-    this.masterSpeak("Welcome to underCooked kitchen. Remember, don't overcook!")
+    this.setState({masterSpeech: "Welcome to the underCooked! kitchen. Remember, don't overcook!"})
+    this.masterSpeak("Welcome to the underCooked kitchen. Remember, don't overcook!")
     this.addShakeClassMaster('.master-avatar')
     setTimeout(this.clearMasterSpeech, 1700)
   }
@@ -118,11 +118,11 @@ class Game extends Component {
       if (this.state.tips >= this.props.level.qualified_points) {
         patchData["wins"] = this.props.user.wins + 1
         patchData["games_played"] = this.props.user.games_played + 1
-        this.masterSpeak("Great job!")
+        this.masterSpeak("You won. Great job!")
       } else {
         patchData["losses"] = this.props.user.losses + 1
         patchData["games_played"] = this.props.user.games_played + 1
-        this.masterSpeak("You are fired!")
+        this.masterSpeak("You lost. You are fired!")
       }
       if (this.state.tips > this.props.user.highest_score) {
         patchData["highest_score"] = this.state.tips

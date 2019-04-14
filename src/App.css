@@ -696,7 +696,7 @@
   grid-row-start: 3;
   grid-row-end: last-line;
   display: grid;
-  grid-template-columns: 49% 2% 49%;
+  grid-template-columns: 36% 2% 62%;
 }
 
 #endgame-master-image {

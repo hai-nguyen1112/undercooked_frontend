@@ -6,7 +6,7 @@ import {Image} from 'semantic-ui-react'
 const RecipeReminderPopup = props => {
   let instructionCards = props.level.recipes.map(recipe => <Image key={recipe.name} id={recipe.name} className="instruction" alt="instruction" src={recipe.instruction}/>)
   if (props.level.id !== 1) {
-    instructionCards.unshift(<Image key="imageinstruction" id="imageinstruction" className="instruction" alt="instruction" src="https://i.ibb.co/jb36yyC/instruction-plate.png"/>)
+    instructionCards.unshift(<Image key="imageinstruction" id="imageinstruction" className="instruction" alt="instruction" src="https://i.ibb.co/dj7C8YM/new-instruction-plate.png"/>)
   }
   return (
     <Popup

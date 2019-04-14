@@ -59,9 +59,9 @@ class EndGamePopUp extends Component {
                 {
                   this.props.tips >= this.props.level.qualified_points
                   ?
-                  "Great Job!"
+                  "You won. Great Job!"
                   :
-                  "You are fired!"
+                  "You lost. You are fired!"
                 }
               </div>
             </div>
