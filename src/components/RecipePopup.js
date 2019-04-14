@@ -8,6 +8,14 @@ const RecipePopup = props => {
   if (props.level.id !== 1) {
     instructionCards.unshift(<Image key="imageinstruction" id="imageinstruction" className="instruction" alt="instruction" src="https://i.ibb.co/dj7C8YM/new-instruction-plate.png"/>)
   }
+  let actions
+  if (props.level.id === 1) {
+    actions = "Serve"
+  } else if (props.level.id === 2) {
+    actions = "Wash, Serve"
+  } else {
+    actions = "Wash, Cook, Serve"
+  }
   return (
     <Popup trigger={<Image className="level_logo" alt="level_logo" src={props.level.logo}/>} modal id="popup-window">
     {close => (
@@ -15,8 +23,14 @@ const RecipePopup = props => {
       <div className="close" onClick={close}>
         &times;
       </div>
-      <div className="header">Level {props.level.id} Recipes</div>
+      <div className="header">Level {props.level.id} Instructions</div>
       <div className="content">
+        You have {props.level.clock} seconds to make minimum ${props.level.qualified_points} in tips.
+        <br />
+        <br />
+        Actions required: {actions}
+        <br />
+        <br />
         {instructionCards}
       </div>
       <div className="actions">
