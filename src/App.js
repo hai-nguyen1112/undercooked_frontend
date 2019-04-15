@@ -8,6 +8,7 @@ import Rules from './components/Rules'
 import Leaderboard from './containers/Leaderboard'
 import Levels from './containers/Levels'
 import Game from './containers/Game'
+import SignupForm from './containers/SignupForm'
 
 class App extends Component {
   constructor() {
@@ -62,6 +63,9 @@ class App extends Component {
             }}/>
           <Route exact path="/game" render={() => {
               return isEmpty(this.state.user) ? <Redirect to="/login"/> : <Game user={this.state.user} level={this.state.level} handleUpdateUserState={this.handleUpdateUserState}/>
+            }}/>
+          <Route exact path="/signup" render={() => {
+              return isEmpty(this.state.user) ? <SignupForm handleUpdateUserState={this.handleUpdateUserState}/> : <Redirect to="/profile"/>
             }}/>
           <Route exact path="/" render={() => <Redirect to="/profile"/>}/>
         </Switch>

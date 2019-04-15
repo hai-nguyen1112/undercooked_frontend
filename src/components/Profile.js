@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Card, Image, Button, Icon, List} from 'semantic-ui-react'
+import {Image, List} from 'semantic-ui-react'
 import Nav from './Nav'
 import MainLogo from './MainLogo'
 import {withRouter, Link} from 'react-router-dom'

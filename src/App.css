@@ -1175,10 +1175,28 @@
 #login-page {
   display: grid;
   grid-template-columns: 100%;
+  grid-template-rows: auto auto auto auto;
+}
+
+#signup-page {
+  display: grid;
+  grid-template-columns: 100%;
   grid-template-rows: auto auto auto;
 }
 
 #login-page-mainlogo-holder {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: rgb(246, 193, 71);
+}
+
+#signup-page-mainlogo-holder {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 1;
@@ -1201,8 +1219,29 @@
   padding: 15px 15px 15px 15px;
 }
 
+#signup-page-signupform-holder {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 15px 15px 15px;
+}
 
 #login-form-login-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  border-radius: 8px;
+  background: pink;
+  flex-direction: column;
+  padding-bottom: 15px;
+}
+
+#signup-form-signup-form {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1220,6 +1259,13 @@
   font-size: 20px;
 }
 
+#signup-page-signup-name {
+  padding: 15px 15px 15px 15px;
+  font-family: 'Acme', sans-serif;
+  color: red;
+  font-size: 20px;
+}
+
 .ui.form .field > label {
   color: red !important;
   font-family: 'Acme', sans-serif;
@@ -1230,7 +1276,37 @@ button.ui.tiny.button {
   font-family: 'Acme', sans-serif;
 }
 
+#login-page-signuplink-holder {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 15px;
+}
+
+#login-page-signuplink-holder-inner {
+  background: pink;
+  padding: 15px 15px 15px 15px;
+  border-radius: 8px;
+  color: red;
+  font-family: 'Cairo', sans-serif;
+}
+
 #login-page-botaccount-holder {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 5;
+  grid-row-end: last-line;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 15px;
+}
+
+#signup-page-botaccount-holder {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 4;
@@ -1238,9 +1314,18 @@ button.ui.tiny.button {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 15px;
 }
 
 #login-page-botaccount-holder-inner {
+  background: pink;
+  padding: 15px 15px 15px 15px;
+  border-radius: 8px;
+  color: red;
+  font-family: 'Cairo', sans-serif;
+}
+
+#signup-page-botaccount-holder-inner {
   background: pink;
   padding: 15px 15px 15px 15px;
   border-radius: 8px;

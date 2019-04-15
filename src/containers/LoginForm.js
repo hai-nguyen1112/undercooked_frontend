@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import {Button, Form, Message} from 'semantic-ui-react'
 import MainLogo from '../components/MainLogo'
 
@@ -83,9 +83,14 @@ class LoginForm extends Component {
               </Form>
             </div>
         </div>
+        <div id="login-page-signuplink-holder">
+          <div id="login-page-signuplink-holder-inner">
+            <Link to="/signup"><Button style={{color: "red"}}>Create New Account</Button></Link>
+          </div>
+        </div>
         <div id="login-page-botaccount-holder">
           <div id="login-page-botaccount-holder-inner">
-            If you don't have an account, please use the Bot account to log in.
+            If you don't want to create a new account, use the Bot account to log in.
           <br />
             <strong>Username</strong> bot
           <br />
