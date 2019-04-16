@@ -85,7 +85,7 @@ class LoginForm extends Component {
         </div>
         <div id="login-page-signuplink-holder">
           <div id="login-page-signuplink-holder-inner">
-            <Link to="/signup"><Button style={{color: "red"}}>Create New Account</Button></Link>
+            <Link to="/signup"><Button style={{color: "green"}}>Create New Account</Button></Link>
           </div>
         </div>
         <div id="login-page-botaccount-holder">

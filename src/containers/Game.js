@@ -821,14 +821,14 @@ class Game extends Component {
         </div>
         <div className="item" id="controlpanel-holder">
           <Link to="/profile">
-            <Button icon color='blue' style={{width: "110px"}} labelPosition='left'>
+            <Button inverted icon color='blue' style={{width: "110px"}} labelPosition='left'>
               <Icon name='external alternate'/>
               Quit
             </Button>
           </Link>
           </div>
         <div className="item" id="controlpanel-holder1">
-          <Button icon color='orange' style={{width: "110px"}} labelPosition='left' onClick={this.logout}>
+          <Button inverted icon color='orange' style={{width: "110px"}} labelPosition='left' onClick={this.logout}>
             <Icon name='log out'/>
             Logout
           </Button>

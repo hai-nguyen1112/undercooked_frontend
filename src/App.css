@@ -1236,7 +1236,7 @@
   align-items: center;
   width: 25%;
   border-radius: 8px;
-  background: pink;
+  background: lightblue;
   flex-direction: column;
   padding-bottom: 15px;
 }
@@ -1247,7 +1247,7 @@
   align-items: center;
   width: 33%;
   border-radius: 8px;
-  background: pink;
+  background: lightblue;
   flex-direction: column;
   flex-wrap: wrap;
   padding-bottom: 15px;
@@ -1256,24 +1256,24 @@
 #login-page-login-name {
   padding: 15px 15px 15px 15px;
   font-family: 'Acme', sans-serif;
-  color: red;
+  color: rgb(0, 136, 146);
   font-size: 20px;
 }
 
 #signup-page-signup-name {
   padding: 15px 15px 15px 15px;
   font-family: 'Acme', sans-serif;
-  color: red;
+  color: rgb(0, 136, 146);
   font-size: 20px;
 }
 
 .ui.form .field > label {
-  color: red !important;
+  color: rgb(0, 136, 146) !important;
   font-family: 'Acme', sans-serif;
 }
 
 button.ui.tiny.button {
-  color: red !important;
+  color: rgb(0, 136, 146) !important;
   font-family: 'Acme', sans-serif;
 }
 
@@ -1289,10 +1289,10 @@ button.ui.tiny.button {
 }
 
 #login-page-signuplink-holder-inner {
-  background: pink;
+  background: lightgreen;
   padding: 15px 15px 15px 15px;
   border-radius: 8px;
-  color: red;
+  color: orange;
   font-family: 'Cairo', sans-serif;
 }
 
@@ -1362,14 +1362,22 @@ div.ui.menu {
   font-size: 10px !important;
 }
 
-.ui.message {
+.ui.error.message {
   min-height: 0px !important;
   padding: 2px 2px 2px 5px !important;
   border: none !important;
+  color: red !important;
+  background-color: white !important;
+  font-weight: bold;
+}
+
+.ui.error.message .header {
+  color: red !important;
+  font-weight: bold;
 }
 
 .ui.button:hover {
-  background-color: white !important;
+  background-color: none !important;
 }
 
 .ui.button:focus {
