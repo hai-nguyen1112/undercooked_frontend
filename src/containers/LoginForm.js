@@ -90,7 +90,7 @@ class LoginForm extends Component {
         </div>
         <div id="login-page-botaccount-holder">
           <div id="login-page-botaccount-holder-inner">
-            If you don't want to create a new account, use the Bot account to log in.
+            If you don't want to create an account, use the Bot account to log in.
           <br />
             <strong>Username</strong> bot
           <br />

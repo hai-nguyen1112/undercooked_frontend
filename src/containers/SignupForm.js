@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {withRouter, Link} from 'react-router-dom'
 import {Button, Form, Message} from 'semantic-ui-react'
 import MainLogo from '../components/MainLogo'
+import ImageUploader from 'react-images-upload'
 
 class SignupForm extends Component {
   constructor() {
@@ -16,7 +17,7 @@ class SignupForm extends Component {
       failedSignupMessagePassword: undefined,
       failedSignupMessagePasswordConfirmation: undefined,
       failedSignupMessageBio: undefined,
-      failedSignupMessageAvatar: undefined,
+      failedSignupMessageAvatar: undefined
     }
   }
 
@@ -83,6 +84,10 @@ class SignupForm extends Component {
 
   handleChange = (e, {name, value}) => {
     this.setState({[name]: value})
+  }
+
+  onDrop = (pictureFiles, pictureDataURLs) => {
+    this.setState({avatar: pictureDataURLs[0]})
   }
 
   render() {
@@ -165,13 +170,12 @@ class SignupForm extends Component {
                     content={this.state.failedSignupMessageBio}
                   />
                 }
-                <Form.Input
-                  type="text"
-                  label="Avatar"
-                  placeholder="Upload avatar..."
-                  name="avatar"
-                  onChange={this.handleChange}
-                  value={this.state.avatar}
+                <ImageUploader
+                  buttonText='Upload Avatar'
+                  onChange={this.onDrop}
+                  imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                  maxFileSize={5242880}
+                  singleImage={true}
                 />
                 {this.state.failedSignupMessageAvatar === undefined
                   ?
@@ -188,7 +192,7 @@ class SignupForm extends Component {
         </div>
         <div id="signup-page-botaccount-holder">
           <div id="signup-page-botaccount-holder-inner">
-            If you don't want to create a new account, use the Bot account to <Link to="/login" style={{textDecoration: "underline", fontFamily: "Cairo"}}>log in</Link>.
+            If you don't want to create an account, use the Bot account to <Link to="/login" style={{textDecoration: "underline", fontFamily: "Cairo"}}>log in</Link>.
           <br />
             <strong>Username</strong> bot
           <br />
