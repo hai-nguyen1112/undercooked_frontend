@@ -1245,10 +1245,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 25%;
+  width: 33%;
   border-radius: 8px;
   background: pink;
   flex-direction: column;
+  flex-wrap: wrap;
   padding-bottom: 15px;
 }
 
@@ -1349,4 +1350,28 @@ div.ui.menu {
 .ui.inverted.menu a.item:hover {
   background: none !important;
   border-radius: 4px !important;
+}
+
+.fileContainer {
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.fileContainer .chooseFileButton {
+  padding: 5px !important;
+  font-size: 10px !important;
+}
+
+.ui.message {
+  min-height: 0px !important;
+  padding: 2px 2px 2px 5px !important;
+  border: none !important;
+}
+
+.ui.button:hover {
+  background-color: white !important;
+}
+
+.ui.button:focus {
+  background-color: white !important;
 }

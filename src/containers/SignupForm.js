@@ -87,7 +87,9 @@ class SignupForm extends Component {
   }
 
   onDrop = (pictureFiles, pictureDataURLs) => {
-    this.setState({avatar: pictureDataURLs[0]})
+    this.setState({avatar: pictureDataURLs.slice(-1)[0]})
+    document.getElementById('avatar-box').value = pictureFiles.slice(-1)[0].name
+    console.log(pictureDataURLs)
   }
 
   render() {
@@ -101,7 +103,9 @@ class SignupForm extends Component {
               <div id="signup-page-signup-name">
                 Sign Up
               </div>
-              <Form size="tiny" onSubmit={this.handleSignupSubmit} error style={{width: "300px", textAlign: "left"}}>
+              <Form size="tiny" onSubmit={this.handleSignupSubmit} error style={{width: "410px", textAlign: "left"}}>
+              <Form.Group style={{display: 'flex', flexDirection: 'row', width: "100%", justifyContent: "center", marginBottom: "0px"}}>
+              <Form.Group style={{display: 'flex', flexDirection: 'column', width: "50%", marginLeft: "8px"}}>
                 <Form.Input
                   type="text"
                   label="Username"
@@ -119,6 +123,8 @@ class SignupForm extends Component {
                     content={this.state.failedSignupMessageUsername}
                   />
                 }
+              </Form.Group>
+              <Form.Group style={{display: 'flex', flexDirection: 'column', width: "50%", marginLeft: "14px"}}>
                 <Form.Input
                   type="password"
                   label="Password"
@@ -136,57 +142,77 @@ class SignupForm extends Component {
                     content={this.state.failedSignupMessagePassword}
                   />
                 }
-                <Form.Input
-                  type="password"
-                  label="Confirm Password"
-                  placeholder="Enter password again..."
-                  name="password_confirmation"
-                  onChange={this.handleChange}
-                  value={this.state.password_confirmation}
+              </Form.Group>
+              </Form.Group>
+              <Form.Group style={{display: 'flex', flexDirection: 'row', width: "100%", justifyContent: "center", marginBottom: "0px"}}>
+              <Form.Group style={{display: 'flex', flexDirection: 'column', width: "50%", marginLeft: "8px"}}>
+              <Form.Input
+                type="text"
+                label="Bio"
+                placeholder="Enter your short bio..."
+                name="bio"
+                onChange={this.handleChange}
+                value={this.state.bio}
+              />
+              {this.state.failedSignupMessageBio === undefined
+                ?
+                null
+                :
+                <Message
+                  error
+                  content={this.state.failedSignupMessageBio}
                 />
-                {this.state.failedSignupMessagePasswordConfirmation === undefined
-                  ?
-                  null
-                  :
-                  <Message
-                    error
-                    content={this.state.failedSignupMessagePasswordConfirmation}
-                  />
-                }
-                <Form.Input
-                  type="text"
-                  label="Bio"
-                  placeholder="Enter your short bio..."
-                  name="bio"
-                  onChange={this.handleChange}
-                  value={this.state.bio}
+              }
+              </Form.Group>
+              <Form.Group style={{display: 'flex', flexDirection: 'column', width: "50%", marginLeft: "14px"}}>
+              <Form.Input
+                type="password"
+                label="Confirm Password"
+                placeholder="Enter password again..."
+                name="password_confirmation"
+                onChange={this.handleChange}
+                value={this.state.password_confirmation}
+              />
+              {this.state.failedSignupMessagePasswordConfirmation === undefined
+                ?
+                null
+                :
+                <Message
+                  error
+                  content={this.state.failedSignupMessagePasswordConfirmation}
                 />
-                {this.state.failedSignupMessageBio === undefined
-                  ?
-                  null
-                  :
-                  <Message
-                    error
-                    content={this.state.failedSignupMessageBio}
-                  />
-                }
-                <ImageUploader
-                  buttonText='Upload Avatar'
-                  onChange={this.onDrop}
-                  imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                  maxFileSize={5242880}
-                  singleImage={true}
+              }
+              </Form.Group>
+              </Form.Group>
+              <Form.Group style={{display: 'flex', flexDirection: 'column', width: "100%", justifyContent: "center", marginBottom: "0px"}}>
+              <Form.Group style={{display: 'flex', flexDirection: 'column', width: "99.4%", marginLeft: "8px"}}>
+              <Form.Input
+                type="text"
+                label="Avatar"
+                placeholder="Choose an image in the box below..."
+                name="avatar"
+                id="avatar-box"
+              />
+              {this.state.failedSignupMessageAvatar === undefined
+                ?
+                null
+                :
+                <Message
+                  error
+                  content={this.state.failedSignupMessageAvatar}
                 />
-                {this.state.failedSignupMessageAvatar === undefined
-                  ?
-                  null
-                  :
-                  <Message
-                    error
-                    content={this.state.failedSignupMessageAvatar}
-                  />
-                }
-                <Button size="tiny" type="submit">Submit</Button>
+              }
+              </Form.Group>
+              <ImageUploader
+                withIcon={false}
+                buttonText='Choose from computer'
+                onChange={this.onDrop}
+                imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                maxFileSize={5242880}
+                style={{width: "96.5%", marginLeft: "14px", marginBottom: "5px"}}
+              />
+              </Form.Group>
+                <Button size="tiny" type="submit" style={{marginLeft: "7.5px"}}>Submit</Button>
               </Form>
             </div>
         </div>

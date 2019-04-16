@@ -75,7 +75,7 @@ class LoginForm extends Component {
                   :
                   <Message
                     error
-                    header='Action Forbidden'
+                    header='Login Failed'
                     content={this.state.failedLoginMessage}
                   />
                 }
