@@ -30,7 +30,7 @@ class Game extends Component {
       serveGroup: [],
       recipes: [],
       tips: 0,
-      clock: props.level.clock,
+      clock: 2,
       popupOpen: false,
       popupRecipeOpen: false,
       masterSpeech: "",
@@ -138,7 +138,7 @@ class Game extends Component {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      body: JSON.stringify(patchData)
+      body: JSON.stringify({user: patchData})
     }).then(res => res.json())
       .then(updatedUser => {
         this.props.handleUpdateUserState(updatedUser)
