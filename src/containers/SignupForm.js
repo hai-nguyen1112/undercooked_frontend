@@ -4,6 +4,9 @@ import {Button, Form, Message} from 'semantic-ui-react'
 import MainLogo from '../components/MainLogo'
 import ImageUploader from 'react-images-upload'
 
+let PICTURE_NAME
+let PICTURE_URL
+
 class SignupForm extends Component {
   constructor() {
     super()
@@ -22,6 +25,11 @@ class SignupForm extends Component {
   }
 
   handleSignupSubmit = () => {
+    this.setState({failedSignupMessageUsername: undefined})
+    this.setState({failedSignupMessagePassword: undefined})
+    this.setState({failedSignupMessagePasswordConfirmation: undefined})
+    this.setState({failedSignupMessageBio: undefined})
+    this.setState({failedSignupMessageAvatar: undefined})
     fetch('http://localhost:3000/api/v1/users', {
       method: "POST",
       headers: {
@@ -89,7 +97,16 @@ class SignupForm extends Component {
   onDrop = (pictureFiles, pictureDataURLs) => {
     this.setState({avatar: pictureDataURLs.slice(-1)[0]})
     document.getElementById('avatar-box').value = pictureFiles.slice(-1)[0].name
-    console.log(pictureDataURLs)
+    PICTURE_NAME = pictureFiles.slice(-1)[0].name
+    PICTURE_URL = pictureDataURLs.slice(-1)[0]
+  }
+
+  handleChangeOfAvatarName = (e, {name, value}) => {
+    if (value !== PICTURE_NAME) {
+      this.setState({avatar: ""})
+    } else {
+      this.setState({avatar: PICTURE_URL})
+    }
   }
 
   render() {
@@ -192,6 +209,7 @@ class SignupForm extends Component {
                 placeholder="Choose an image in the box below..."
                 name="avatar"
                 id="avatar-box"
+                onChange={this.handleChangeOfAvatarName}
               />
               {this.state.failedSignupMessageAvatar === undefined
                 ?

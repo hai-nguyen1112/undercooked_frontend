@@ -400,7 +400,7 @@ class Game extends Component {
       this.eliminateDraggedItemFromTheirOriginalState(this.state.draggedItem)
       this.addShakeClass(".trash-image")
     }
-    if (this.state.draggedItem.kind === 'being_used_tool') {
+    if (this.state.draggedItem.kind === 'being_used_tool' && this.state.cooking === false) {
       this.addShakeClassMaster('.master-avatar', 2500)
       this.setState({masterSpeech: "Oh no, don't throw usable tools away."})
       this.masterSpeak("Oh no, don't throw usable tools away.")
@@ -408,7 +408,7 @@ class Game extends Component {
       this.setState({cookGroup: this.state.cookGroup.filter(item => item.name !== this.state.draggedItem.name)})
       this.addShakeClass(".trash-image")
     }
-    if (this.state.draggedItem.kind === 'being_cooked_ingredient') {
+    if (this.state.draggedItem.kind === 'being_cooked_ingredient' && this.state.cooking === false) {
       this.addShakeClassMaster('.master-avatar', 4800)
       this.setState({masterSpeech: "Oh no, don't throw fresh ingredients away. Think of the starving children."})
       this.masterSpeak("Oh no, don't throw fresh ingredients away. Think of the starving children.")
