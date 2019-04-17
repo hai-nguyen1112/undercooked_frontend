@@ -10,6 +10,8 @@
   - Go to: undercooked-herokuapp.com
   - Browser: Chrome or Firefox
 
+* Link to underCooked! backend: ![underCooked! backend](https://github.com/hai-nguyen1112/undercooked)
+
 * Game instructions
   1. Game Interface
 
@@ -20,5 +22,3 @@
     ![Action Serve](https://i.ibb.co/k4Sc53Y/new-serve-action.png)
     ![Action Wash](https://i.ibb.co/qDqDh0y/new-wash-action.png)
     ![Action Cook](https://i.ibb.co/S0VDMCd/new-cook-action.png)
-
-* Link to underCooked! backend: ![underCooked! backend](https://github.com/hai-nguyen1112/undercooked)
